@@ -1,7 +1,7 @@
 
 package com.gmerino.data.net;
 
-import com.domain.user.User;
+import com.domain.user.data.User;
 import com.google.gson.annotations.Expose;
 
 public class Result {

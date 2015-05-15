@@ -1,4 +1,4 @@
-package com.domain.user;
+package com.domain.user.data;
 
 
 import com.google.gson.annotations.Expose;

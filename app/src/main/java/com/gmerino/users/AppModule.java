@@ -1,13 +1,6 @@
 package com.gmerino.users;
 
-import android.content.Context;
-
-import com.gmerino.users.activity.MainActivity;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by Guille on 15/05/2015.

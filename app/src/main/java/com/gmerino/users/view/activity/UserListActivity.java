@@ -1,4 +1,4 @@
-package com.gmerino.users.activity;
+package com.gmerino.users.view.activity;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -14,11 +14,15 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.gmerino.users.R;
-import com.gmerino.users.fragment.UserListFragment;
+import com.gmerino.users.view.activity.BaseActivity;
+import com.gmerino.users.view.fragment.UserDetailFragment;
+import com.gmerino.users.view.fragment.UserListFragment;
+
+import java.util.List;
 
 
-public class UserListActivity extends Activity
-        implements UserListFragment.Callbacks, SwipeRefreshLayout.OnRefreshListener {
+public class UserListActivity extends BaseActivity
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = UserListActivity.class.getCanonicalName();
     /**
@@ -60,6 +64,11 @@ public class UserListActivity extends Activity
         handleIntent(getIntent());
 
 
+    }
+
+    @Override
+    protected List<Object> getModules() {
+        return null;
     }
 
     @Override
@@ -106,7 +115,7 @@ public class UserListActivity extends Activity
 
     @Override
     public void onFragmentAttached() {
-        if(firstTime){
+        if (firstTime) {
             refresh();
         }
     }

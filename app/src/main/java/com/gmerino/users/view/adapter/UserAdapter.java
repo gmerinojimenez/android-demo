@@ -1,4 +1,4 @@
-package com.gmerino.users.adapter;
+package com.gmerino.users.view.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

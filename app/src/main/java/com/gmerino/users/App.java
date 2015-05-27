@@ -2,6 +2,8 @@ package com.gmerino.users;
 
 import android.app.Application;
 
+import com.gmerino.users.module.RootModule;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,12 +21,20 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        objectGraph = ObjectGraph.create(getModules().toArray());
+
+        objectGraph = ObjectGraph.create(getModules());
         objectGraph.inject(this);
+        objectGraph.injectStatics();
+
     }
 
-    private List<Object> getModules() {
-        return Arrays.<Object>asList(new AppModule(this));
+    public Object[] getModules() {
+        return new Object[]{
+                new RootModule(this)
+        };
     }
 
+    public ObjectGraph plus(List<Object> modules){
+        return objectGraph.plus(modules.toArray());
+    }
 }

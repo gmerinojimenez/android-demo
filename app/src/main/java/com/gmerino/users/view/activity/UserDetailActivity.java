@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.gmerino.users.R;
+import com.gmerino.users.view.activity.UserListActivity;
+import com.gmerino.users.view.fragment.UserDetailFragment;
 
 
 /**

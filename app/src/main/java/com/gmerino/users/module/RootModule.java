@@ -2,13 +2,9 @@ package com.gmerino.users.module;
 
 import android.content.Context;
 
-import com.gmerino.daggerdemo.DIApplication;
-import com.gmerino.daggerdemo.trash.B;
-import com.gmerino.daggerdemo.trash.C;
 import com.gmerino.users.App;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;

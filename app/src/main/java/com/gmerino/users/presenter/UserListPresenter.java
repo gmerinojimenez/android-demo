@@ -1,14 +1,15 @@
 package com.gmerino.users.presenter;
 
-import javax.inject.Inject;
+import com.domain.user.data.User;
+
 
 /**
  * Created by Guille on 15/05/2015.
  */
 public class UserListPresenter {
 
-    @Inject
-    public UserListPresenter() {
+
+    public void onUserClicked(User user) {
 
     }
 }

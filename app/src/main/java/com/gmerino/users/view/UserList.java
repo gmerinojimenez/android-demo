@@ -1,4 +1,4 @@
-package com.gmerino.users.view.activity;
+package com.gmerino.users.view;
 
 import com.domain.user.data.User;
 

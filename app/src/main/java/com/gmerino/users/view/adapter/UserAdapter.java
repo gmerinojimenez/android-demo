@@ -12,20 +12,27 @@ import android.widget.TextView;
 
 import com.domain.user.data.User;
 import com.gmerino.users.R;
+import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.utils.SetImageRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public class UserAdapter extends ArrayAdapter<User> {
 
-    private Activity activity;
     private List<User> users = new ArrayList<>();
+
+    private Activity activity;
+
+    @Inject
+    UserListPresenter presenter;
 
 
     public UserAdapter(Activity activity, int layoutResourceId, List<User> data) {
         super(activity, layoutResourceId, data);
-        this.activity = activity;
     }
 
     @Override
@@ -38,16 +45,16 @@ public class UserAdapter extends ArrayAdapter<User> {
         return true;
     }
 
-    public void setUsers(List<User> userList, Map<String, User> deleted) {
-        this.users.clear();
-        for (User user : userList) {
-            if (!deleted.containsKey(user.getMd5()) &&
-                    (!UserHandler.getInstance().shouldFilter() || user.getName().toString().toLowerCase().contains(UserHandler.getInstance().getFilter().toLowerCase()))) {
-                this.users.add(user);
-            }
-        }
-
-    }
+//    public void setUsers(List<User> userList, Map<String, User> deleted) {
+//        this.users.clear();
+//        for (User user : userList) {
+//            if (!deleted.containsKey(user.getMd5()) &&
+//                    (!UserHandler.getInstance().shouldFilter() || user.getName().toString().toLowerCase().contains(UserHandler.getInstance().getFilter().toLowerCase()))) {
+//                this.users.add(user);
+//            }
+//        }
+//
+//    }
 
 
     private class ViewHolder {
@@ -123,23 +130,23 @@ public class UserAdapter extends ArrayAdapter<User> {
             Thread t = new Thread(aux);
             t.start();
 
-            holder.starred.setChecked(UserHandler.getInstance().isUserStarred(user));
-
-            //This should be on viewholder
-            holder.starred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    UserHandler.getInstance().addStarred(user, isChecked);
-                }
-            });
-
-            //This should be on viewholder
-            holder.delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    UserHandler.getInstance().removeUser(user);
-                }
-            });
+//            holder.starred.setChecked(UserHandler.getInstance().isUserStarred(user));
+//
+//            //This should be on viewholder
+//            holder.starred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    UserHandler.getInstance().addStarred(user, isChecked);
+//                }
+//            });
+//
+//            //This should be on viewholder
+//            holder.delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    UserHandler.getInstance().removeUser(user);
+//                }
+//            });
         }
 
         return convertView;

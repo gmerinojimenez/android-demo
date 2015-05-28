@@ -1,23 +1,18 @@
 package com.gmerino.users.view.activity;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.gmerino.users.R;
-import com.gmerino.users.view.activity.BaseActivity;
-import com.gmerino.users.view.fragment.UserDetailFragment;
 import com.gmerino.users.view.fragment.UserListFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,7 +26,7 @@ public class UserListActivity extends BaseActivity
      */
     private boolean mTwoPane;
 
-    private boolean firstTime = true;
+//    private boolean firstTime = true;
 
     private SwipeRefreshLayout swipeLayout;
 
@@ -62,13 +57,11 @@ public class UserListActivity extends BaseActivity
         }
 
         handleIntent(getIntent());
-
-
     }
 
     @Override
     protected List<Object> getModules() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -78,61 +71,56 @@ public class UserListActivity extends BaseActivity
 
     private void handleIntent(Intent intent) {
 
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.d(TAG, "Searching " + query);
-            UserHandler.getInstance().setFilter(query);
-        }
+//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            Log.d(TAG, "Searching " + query);
+//            UserHandler.getInstance().setFilter(query);
+//        }
     }
 
+//    @Override
+//    public void onItemSelected(String id) {
+//        if (mTwoPane) {
+//            // In two-pane mode, show the detail view in this activity by
+//            // adding or replacing the detail fragment using a
+//            // fragment transaction.
+////            Bundle arguments = new Bundle();
+////            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
+//            UserDetailFragment fragment = new UserDetailFragment();
+////            fragment.setArguments(arguments);
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.user_detail_container, fragment)
+//                    .commit();
+//
+//        } else {
+//            // In single-pane mode, simply start the detail activity
+//            // for the selected item ID.
+//            Intent detailIntent = new Intent(this, UserDetailActivity.class);
+////            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
+//            startActivity(detailIntent);
+//        }
+//    }
 
-    /**
-     * Callback method from {@link UserListFragment.Callbacks}
-     * indicating that the item with the given ID was selected.
-     */
-    @Override
-    public void onItemSelected(String id) {
-        if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
-            UserDetailFragment fragment = new UserDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.user_detail_container, fragment)
-                    .commit();
+//    @Override
+//    public void onFragmentAttached() {
+//        if (firstTime) {
+//            refresh();
+//        }
+//    }
 
-        } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, UserDetailActivity.class);
-            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
-        }
-    }
-
-    @Override
-    public void onFragmentAttached() {
-        if (firstTime) {
-            refresh();
-        }
-    }
-
-    private void refresh() {
-        firstTime = false;
-        UserHandler.getInstance().populate(40);
-    }
+//    private void refresh() {
+//        firstTime = false;
+//        UserHandler.getInstance().populate(40);
+//    }
 
     @Override
     public void onRefresh() {
-        UserHandler.getInstance().setFilter("");
-        refresh();
-
-        swipeLayout.setRefreshing(false);
-        Toast.makeText(this, getString(R.string.update_info),
-                Toast.LENGTH_SHORT).show();
+//        UserHandler.getInstance().setFilter("");
+//        refresh();
+//
+//        swipeLayout.setRefreshing(false);
+//        Toast.makeText(this, getString(R.string.update_info),
+//                Toast.LENGTH_SHORT).show();
     }
 
     @Override

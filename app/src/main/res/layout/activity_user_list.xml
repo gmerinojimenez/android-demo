@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/user_list"
-        android:name="com.user.randomco.users.UserListFragment"
+        android:name="com.gmerino.users.view.fragment.UserListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"

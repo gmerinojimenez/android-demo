@@ -1,6 +1,7 @@
 package com.gmerino.users.presenter;
 
 import com.gmerino.data.repository.UserRepository;
+import com.gmerino.users.interactor.LoadUsersInteractor;
 import com.gmerino.users.view.fragment.UserListView;
 
 import javax.inject.Inject;
@@ -14,6 +15,8 @@ public class UserListPresenterImpl implements UserListPresenter {
     private UserListView view;
 
     private UserRepository userRepository;
+
+    private LoadUsersInteractor loadUsersInteractor;
 
     public UserListPresenterImpl(UserRepository userRepository){
         this.userRepository = userRepository;

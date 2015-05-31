@@ -100,5 +100,6 @@
     <orderEntry type="library" exported="" name="javawriter-2.5.0" level="project" />
     <orderEntry type="module" module-name="data" exported="" />
     <orderEntry type="module" module-name="domain" exported="" />
+    <orderEntry type="module" module-name="commons" />
   </component>
 </module>

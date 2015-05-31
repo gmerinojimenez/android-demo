@@ -2,6 +2,7 @@ package com.gmerino.users.module;
 
 import android.content.Context;
 
+import com.gmerino.commons.ThreadPool;
 import com.gmerino.users.App;
 import com.gmerino.users.presenter.UserListPresenter;
 import com.gmerino.users.presenter.UserListPresenterMock;
@@ -30,10 +31,10 @@ public class RootModule {
         return context;
     }
 
-//    @Provides
-//    @Singleton
-//    UserListPresenter provideUserListPresenter(){
-//        UserListPresenterMock presenter = new UserListPresenterMock();
-//        return presenter;
-//    }
+    @Provides
+    @Singleton
+    ThreadPool provideThreadPool() {
+        return new ThreadPool();
+    }
+
 }

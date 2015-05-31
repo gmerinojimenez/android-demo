@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Guille on 09/03/2015.
  */
-class UserResponse {
+public class UserResponse {
 
     private List<Result> results = new ArrayList<>();
 

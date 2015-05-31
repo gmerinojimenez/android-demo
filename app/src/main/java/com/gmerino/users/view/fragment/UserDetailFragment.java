@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserDetailPresenter;
-import com.gmerino.users.utils.SetImageRunnable;
 
 import javax.inject.Inject;
 

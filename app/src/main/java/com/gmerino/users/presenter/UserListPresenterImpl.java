@@ -17,9 +17,6 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     }
 
-    public void onUserClicked(User user) {
-    }
-
     @Override
     public void loadUsers() {
     }

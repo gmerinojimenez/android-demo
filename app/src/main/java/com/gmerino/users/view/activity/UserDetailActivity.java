@@ -11,6 +11,9 @@ import com.gmerino.users.R;
 import com.gmerino.users.view.activity.UserListActivity;
 import com.gmerino.users.view.fragment.UserDetailFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * An activity representing a single UserHandler detail screen. This
@@ -21,7 +24,7 @@ import com.gmerino.users.view.fragment.UserDetailFragment;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link UserDetailFragment}.
  */
-public class UserDetailActivity extends Activity {
+public class UserDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,33 @@ public class UserDetailActivity extends Activity {
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // savedInstanceState is non-null when there is fragment state
+        // saved from previous configurations of this activity
+        // (e.g. when rotating the screen from portrait to landscape).
+        // In this case, the fragment will automatically be re-added
+        // to its container so we don't need to manually add it.
+        // For more information, see the Fragments API guide at:
+        //
+        // http://developer.android.com/guide/components/fragments.html
+        //
+        if (savedInstanceState == null) {
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+            Bundle arguments = new Bundle();
+            arguments.putString(UserDetailFragment.ARG_ITEM_ID,
+                    getIntent().getStringExtra(UserDetailFragment.ARG_ITEM_ID));
+            UserDetailFragment fragment = new UserDetailFragment();
+            fragment.setArguments(arguments);
+            getFragmentManager().beginTransaction()
+                    .add(R.id.user_detail_container, fragment)
+                    .commit();
+        }
+
+    }
+
+    @Override
+    protected List<Object> getModules() {
+        return new ArrayList<>();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

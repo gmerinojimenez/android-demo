@@ -56,11 +56,6 @@ public class UserListPresenterMock implements UserListPresenter {
     }
 
     @Override
-    public void onUserClicked(User user) {
-
-    }
-
-    @Override
     public void loadUsers() {
         view.onUsersLoaded(users);
     }

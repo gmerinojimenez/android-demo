@@ -17,6 +17,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.activity.UserDetailActivity"
+            android:label="@string/title_user_detail"
+            android:parentActivityName=".view.activity.UserListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.UserListActivity" />
+        </activity>
+
     </application>
 
 </manifest>

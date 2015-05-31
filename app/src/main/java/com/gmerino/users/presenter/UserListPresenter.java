@@ -11,7 +11,5 @@ public interface UserListPresenter {
 
     void setView(UserListView view);
 
-    void onUserClicked(User user);
-
     void loadUsers();
 }

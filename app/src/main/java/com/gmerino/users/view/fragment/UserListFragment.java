@@ -10,7 +10,6 @@ import android.widget.ListView;
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
-import com.gmerino.users.presenter.UserListPresenterImpl;
 import com.gmerino.users.view.adapter.UserAdapter;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class UserListFragment extends ListFragment implements UserListView {
 //     * The fragment's current callback object, which is notified of list item
 //     * clicks.
 //     */
-//    private Callbacks mCallbacks = sDummyCallbacks;
+    private Callback callback = null;
 //
     /**
      * The current activated item position. Only used on tablets.
@@ -60,25 +59,24 @@ public class UserListFragment extends ListFragment implements UserListView {
 //        adapter.notifyDataSetChanged();
 //    }
 //
-//    /**
-//     * A callback interface that all activities containing this fragment must
-//     * implement. This mechanism allows activities to be notified of item
-//     * selections.
-//     */
-//    public interface Callbacks {
-//        /**
-//         * Callback for when an item has been selected.
-//         */
-//        public void onItemSelected(String id);
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * Callback for when an item has been selected.
+         */
+        void onItemSelected(String id);
+    }
 //
-//        public void onFragmentAttached();
-//    }
-//
 //    /**
-//     * A dummy implementation of the {@link Callbacks} interface that does
+//     * A dummy implementation of the {@link Callback} interface that does
 //     * nothing. Used only when this fragment is not attached to an activity.
 //     */
-//    private static Callbacks sDummyCallbacks = new Callbacks() {
+//    private static Callback sDummyCallbacks = new Callback() {
 //        @Override
 //        public void onItemSelected(String id) {
 //        }
@@ -141,8 +139,8 @@ public class UserListFragment extends ListFragment implements UserListView {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-//        mCallbacks.onItemSelected(((User)listView.getAdapter().getItem(position)).getMd5());
-        presenter.onUserClicked((User) listView.getAdapter().getItem(position));
+        callback.onItemSelected(((User) listView.getAdapter().getItem(position)).getMd5());
+//        presenter.onUserClicked((User) listView.getAdapter().getItem(position));
     }
 
     @Override
@@ -180,5 +178,9 @@ public class UserListFragment extends ListFragment implements UserListView {
     public void onUsersLoaded(List<User> users) {
         adapter.updateUsers(users, null);
         adapter.notifyDataSetChanged();
+    }
+
+    public void setCallback(Callback callback){
+        this.callback = callback;
     }
 }

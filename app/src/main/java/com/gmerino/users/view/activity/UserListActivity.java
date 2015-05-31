@@ -11,6 +11,7 @@ import android.widget.SearchView;
 
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.view.fragment.UserDetailFragment;
 import com.gmerino.users.view.fragment.UserListFragment;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import javax.inject.Inject;
 
 
 public class UserListActivity extends BaseActivity
-        implements SwipeRefreshLayout.OnRefreshListener {
+        implements SwipeRefreshLayout.OnRefreshListener, UserListFragment.Callback {
 
     private static final String TAG = UserListActivity.class.getCanonicalName();
     /**
@@ -62,6 +63,10 @@ public class UserListActivity extends BaseActivity
                     .setActivateOnItemClick(true);
         }
 
+        ((UserListFragment) getFragmentManager()
+                .findFragmentById(R.id.user_list))
+                .setCallback(this);
+
         handleIntent(getIntent());
     }
 
@@ -84,28 +89,28 @@ public class UserListActivity extends BaseActivity
 //        }
     }
 
-//    @Override
-//    public void onItemSelected(String id) {
-//        if (mTwoPane) {
-//            // In two-pane mode, show the detail view in this activity by
-//            // adding or replacing the detail fragment using a
-//            // fragment transaction.
-////            Bundle arguments = new Bundle();
-////            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
-//            UserDetailFragment fragment = new UserDetailFragment();
-////            fragment.setArguments(arguments);
-//            getFragmentManager().beginTransaction()
-//                    .replace(R.id.user_detail_container, fragment)
-//                    .commit();
-//
-//        } else {
-//            // In single-pane mode, simply start the detail activity
-//            // for the selected item ID.
-//            Intent detailIntent = new Intent(this, UserDetailActivity.class);
-////            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
-//            startActivity(detailIntent);
-//        }
-//    }
+    @Override
+    public void onItemSelected(String id) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+//            Bundle arguments = new Bundle();
+//            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
+            UserDetailFragment fragment = new UserDetailFragment();
+//            fragment.setArguments(arguments);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.user_detail_container, fragment)
+                    .commit();
+
+        } else {
+            // In single-pane mode, simply start the detail activity
+            // for the selected item ID.
+            Intent detailIntent = new Intent(this, UserDetailActivity.class);
+//            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
+            startActivity(detailIntent);
+        }
+    }
 
 //    @Override
 //    public void onFragmentAttached() {

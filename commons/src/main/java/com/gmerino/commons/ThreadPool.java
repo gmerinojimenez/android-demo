@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Guille on 31/05/2015.
  */
-public class ThreadPool {
+public class ThreadPool implements Executor {
 
     // Sets the amount of time an idle thread waits before terminating
     private static final int KEEP_ALIVE_TIME = 1;
@@ -52,8 +52,17 @@ public class ThreadPool {
                 mDecodeWorkQueue);
     }
 
-    void execute(Runnable runnable) {
-        executor.execute(runnable);
+//    void execute(Runnable runnable) {
+//        executor.execute(runnable);
+//    }
+
+    @Override
+    public void execute(Interactor interactor) {
+        executor.execute(interactor);
     }
 
+    @Override
+    public void reset() {
+        mDecodeWorkQueue.clear();
+    }
 }

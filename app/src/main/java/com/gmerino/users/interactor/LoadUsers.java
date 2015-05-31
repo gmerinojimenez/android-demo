@@ -15,8 +15,18 @@ package com.gmerino.users.interactor;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.domain.user.data.User;
+
+import java.util.List;
+
 /**
  * Created by Guille on 31/05/2015.
  */
-public interface LoadUsersInteractor {
+public interface LoadUsers {
+
+    interface Callback {
+        void onUsersLoaded(List<User> users);
+    }
+
+    void execute(Callback callback);
 }

@@ -18,9 +18,9 @@ package com.gmerino.commons;
 /**
  * Created by Guille on 15/05/2015.
  */
-public interface Interactor {
+public interface Interactor extends Runnable{
 
-    void run() throws Throwable;
+    void run();
 
     void onFailure(Throwable t);
 

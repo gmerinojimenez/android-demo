@@ -2,10 +2,9 @@ package com.gmerino.users.module;
 
 import android.content.Context;
 
+import com.gmerino.commons.Executor;
 import com.gmerino.commons.ThreadPool;
 import com.gmerino.users.App;
-import com.gmerino.users.presenter.UserListPresenter;
-import com.gmerino.users.presenter.UserListPresenterMock;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -48,7 +47,7 @@ public class RootModule {
 
     @Provides
     @Singleton
-    ThreadPool provideThreadPool() {
+    Executor provideExecutor() {
         return new ThreadPool();
     }
 

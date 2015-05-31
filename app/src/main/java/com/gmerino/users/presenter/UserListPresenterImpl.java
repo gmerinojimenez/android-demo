@@ -1,8 +1,11 @@
 package com.gmerino.users.presenter;
 
+import com.domain.user.data.User;
 import com.gmerino.data.repository.UserRepository;
-import com.gmerino.users.interactor.LoadUsersInteractor;
+import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.view.fragment.UserListView;
+
+import java.util.List;
 
 
 /*
@@ -26,10 +29,12 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     private UserRepository userRepository;
 
-    private LoadUsersInteractor loadUsersInteractor;
+    private LoadUsers loadUsersInteractor;
 
-    public UserListPresenterImpl(UserRepository userRepository) {
+    public UserListPresenterImpl(UserRepository userRepository,
+                                 LoadUsers loadUsers) {
         this.userRepository = userRepository;
+        this.loadUsersInteractor = loadUsers;
     }
 
     @Override
@@ -39,6 +44,11 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     @Override
     public void loadUsers() {
-        userRepository.getUsers();
+        loadUsersInteractor.execute(new LoadUsers.Callback() {
+            @Override
+            public void onUsersLoaded(List<User> users) {
+                view.onUsersLoaded(users);
+            }
+        });
     }
 }

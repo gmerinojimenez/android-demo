@@ -2,15 +2,15 @@ package com.gmerino.users;
 
 import android.content.Context;
 
-import com.domain.user.data.User;
 import com.gmerino.data.repository.CacheUserRepository;
 import com.gmerino.data.repository.RestUserRepository;
 import com.gmerino.data.repository.UserRepository;
+import com.gmerino.users.interactor.LoadUsers;
+import com.gmerino.users.interactor.LoadUsersImpl;
 import com.gmerino.users.presenter.UserDetailPresenter;
 import com.gmerino.users.presenter.UserDetailPresenterMock;
 import com.gmerino.users.presenter.UserListPresenter;
 import com.gmerino.users.presenter.UserListPresenterImpl;
-import com.gmerino.users.presenter.UserListPresenterMock;
 import com.gmerino.users.view.activity.UserDetailActivity;
 import com.gmerino.users.view.activity.UserListActivity;
 import com.gmerino.users.view.fragment.UserDetailFragment;
@@ -58,8 +58,8 @@ public class ActivityModule {
     }
 
     @Provides
-    UserListPresenter provideUserListPresenter(UserRepository repository) {
-        UserListPresenter presenter = new UserListPresenterImpl(repository);
+    UserListPresenter provideUserListPresenter(UserRepository repository, LoadUsers loadUsers) {
+        UserListPresenter presenter = new UserListPresenterImpl(repository, loadUsers);
         return presenter;
     }
 
@@ -75,6 +75,11 @@ public class ActivityModule {
         RestUserRepository rest = new RestUserRepository();
         CacheUserRepository userRepository = new CacheUserRepository(rest);
         return userRepository;
+    }
+
+    @Provides
+    LoadUsers provideLoadUsers(LoadUsersImpl impl){
+        return impl;
     }
 
 }

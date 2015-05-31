@@ -10,10 +10,13 @@ import android.view.MenuInflater;
 import android.widget.SearchView;
 
 import com.gmerino.users.R;
+import com.gmerino.users.presenter.UserListPresenter;
 import com.gmerino.users.view.fragment.UserListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 
 public class UserListActivity extends BaseActivity
@@ -29,6 +32,9 @@ public class UserListActivity extends BaseActivity
 //    private boolean firstTime = true;
 
     private SwipeRefreshLayout swipeLayout;
+
+    @Inject
+    UserListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,4 +144,5 @@ public class UserListActivity extends BaseActivity
 
         return true;
     }
+
 }

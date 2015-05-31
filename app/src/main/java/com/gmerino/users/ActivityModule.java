@@ -3,7 +3,9 @@ package com.gmerino.users;
 import android.content.Context;
 
 import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.presenter.UserListPresenterMock;
 import com.gmerino.users.view.activity.UserListActivity;
+import com.gmerino.users.view.fragment.UserListFragment;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -11,7 +13,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(injects = UserListActivity.class, library = true, complete = false)
+@Module(injects = {UserListFragment.class,
+        UserListActivity.class},
+        library = true, complete = false)
 public class ActivityModule {
 
     private Context context;
@@ -28,7 +32,8 @@ public class ActivityModule {
 
     @Provides
     @Singleton
-    UserListPresenter provideUserListPresenter(UserListPresenter presenter){
+    UserListPresenter provideUserListPresenter(){
+        UserListPresenterMock presenter = new UserListPresenterMock();
         return presenter;
     }
 }

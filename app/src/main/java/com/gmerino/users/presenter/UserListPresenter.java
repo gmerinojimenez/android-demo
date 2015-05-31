@@ -1,15 +1,17 @@
 package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
+import com.gmerino.users.view.fragment.UserListView;
 
 
 /**
- * Created by Guille on 15/05/2015.
+ * Created by Guille on 30/05/2015.
  */
-public class UserListPresenter {
+public interface UserListPresenter {
 
+    void setView(UserListView view);
 
-    public void onUserClicked(User user) {
+    void onUserClicked(User user);
 
-    }
+    void loadUsers();
 }

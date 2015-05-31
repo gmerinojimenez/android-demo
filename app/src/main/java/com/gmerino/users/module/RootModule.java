@@ -3,8 +3,11 @@ package com.gmerino.users.module;
 import android.content.Context;
 
 import com.gmerino.users.App;
+import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.presenter.UserListPresenterMock;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,4 +29,11 @@ public class RootModule {
     Context provideApplicationContext() {
         return context;
     }
+
+//    @Provides
+//    @Singleton
+//    UserListPresenter provideUserListPresenter(){
+//        UserListPresenterMock presenter = new UserListPresenterMock();
+//        return presenter;
+//    }
 }

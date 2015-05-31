@@ -2,10 +2,6 @@ package com.gmerino.users.view.fragment;
 
 import android.app.Fragment;
 
-import com.gmerino.users.presenter.UserListPresenter;
-
-import javax.inject.Inject;
-
 public class UserDetailFragment extends Fragment {
 
 //    /**

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.domain.user.data.User;
 import com.gmerino.users.R;
-import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.presenter.UserListPresenterImpl;
 import com.gmerino.users.utils.SetImageRunnable;
 
 import java.util.ArrayList;
@@ -28,11 +28,13 @@ public class UserAdapter extends ArrayAdapter<User> {
     private Activity activity;
 
     @Inject
-    UserListPresenter presenter;
+    UserListPresenterImpl presenter;
 
 
-    public UserAdapter(Activity activity, int layoutResourceId, List<User> data) {
-        super(activity, layoutResourceId, data);
+    public UserAdapter(Activity activity, int layoutResourceId) {
+        super(activity, layoutResourceId);
+
+        this.activity = activity;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         return true;
     }
 
-//    public void setUsers(List<User> userList, Map<String, User> deleted) {
+    public void updateUsers(List<User> userList, Map<String, User> deleted) {
 //        this.users.clear();
 //        for (User user : userList) {
 //            if (!deleted.containsKey(user.getMd5()) &&
@@ -53,8 +55,9 @@ public class UserAdapter extends ArrayAdapter<User> {
 //                this.users.add(user);
 //            }
 //        }
-//
-//    }
+        this.users = userList;
+
+    }
 
 
     private class ViewHolder {
@@ -92,11 +95,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         return position;
     }
 
-//    @Override
-//    public boolean hasStableIds() {
-//        return false;
-//    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View ret = convertView;
@@ -126,12 +124,12 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.email.setText(user.getEmail());
             holder.phone.setText(user.getPhone());
 
-            SetImageRunnable aux = new SetImageRunnable(user.getPicture().getThumbnail(), holder.picture);
-            Thread t = new Thread(aux);
-            t.start();
+//            SetImageRunnable aux = new SetImageRunnable(user.getPicture().getThumbnail(), holder.picture);
+//            Thread t = new Thread(aux);
+//            t.start();
 
 //            holder.starred.setChecked(UserHandler.getInstance().isUserStarred(user));
-//
+
 //            //This should be on viewholder
 //            holder.starred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //                @Override
@@ -139,7 +137,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 //                    UserHandler.getInstance().addStarred(user, isChecked);
 //                }
 //            });
-//
+
 //            //This should be on viewholder
 //            holder.delete.setOnClickListener(new View.OnClickListener() {
 //                @Override

@@ -1,5 +1,6 @@
 package com.gmerino.users.view.fragment;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,8 +8,12 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.domain.user.data.User;
+import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.presenter.UserListPresenterImpl;
 import com.gmerino.users.view.adapter.UserAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,7 +23,7 @@ import javax.inject.Inject;
  * 'activated' state upon selection. This helps indicate which item is
  * currently being viewed in a {@link UserDetailFragment}.
  */
-public class UserListFragment extends ListFragment {
+public class UserListFragment extends ListFragment implements UserListView {
 
     private static final String TAG = UserListFragment.class.getCanonicalName();
 
@@ -44,6 +49,8 @@ public class UserListFragment extends ListFragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     private UserAdapter adapter;
+
+    private FragmentInjector injector = new FragmentInjector(this);
 //
 //    @Override
 //    public void update(Observable observable, Object data) {
@@ -82,6 +89,7 @@ public class UserListFragment extends ListFragment {
 //        }
 //    };
 //
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -93,15 +101,12 @@ public class UserListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        adapter = new UserAdapter(getActivity(), R.id.user_list, UserHandler.getInstance().getUserList());
-        adapter = null;
+////        adapter = new UserAdapter(getActivity(), R.id.user_list, UserHandler.getInstance().getUserList());
+        adapter = new UserAdapter(getActivity(), R.id.user_list);
 
-//        // TODO: replace with a real list adapter.
-//        setListAdapter(new ArrayAdapter<User>(
-//                getActivity(),
-//                android.R.layout.simple_list_item_activated_1,
-//                android.R.id.text1,
-//                UserHandler.getInstance().getUserList()));
+        presenter.setView(this);
+        presenter.loadUsers();
+
         setListAdapter(adapter);
     }
 
@@ -115,33 +120,19 @@ public class UserListFragment extends ListFragment {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
     }
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//
-//        // Activities containing this fragment must implement its callbacks.
-//        if (!(activity instanceof Callbacks)) {
-//            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-//        }
-//
-//        mCallbacks = (Callbacks) activity;
-//
-//        UserHandler.getInstance().addObserver(this);
-//
-//        mCallbacks.onFragmentAttached();
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//
-//        // Reset the active callbacks interface to the dummy implementation.
-//        mCallbacks = sDummyCallbacks;
-//
-//        UserHandler.getInstance().deleteObserver(this);
-//    }
-//
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        injector.attemptFragmentInjection();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        injector.attemptFragmentInjection();
+    }
+
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
@@ -183,5 +174,11 @@ public class UserListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    @Override
+    public void onUsersLoaded(List<User> users) {
+        adapter.updateUsers(users, null);
+        adapter.notifyDataSetChanged();
     }
 }

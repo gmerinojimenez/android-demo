@@ -1,6 +1,7 @@
 package com.gmerino.users.view.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 
 import com.gmerino.users.ActivityModule;
@@ -29,4 +30,8 @@ public abstract class BaseActivity extends Activity{
     }
 
     protected abstract List<Object> getModules();
+
+    public void inject(Fragment fragment){
+        objectGraph.inject(fragment);
+    }
 }

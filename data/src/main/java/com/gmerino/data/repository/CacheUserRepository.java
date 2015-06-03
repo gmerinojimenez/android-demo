@@ -43,14 +43,11 @@ public class CacheUserRepository implements UserRepository {
 
     @Override
     public List<User> getUsers() {
-        List<User> result;
-        if(isInitialized()){
-            result = cachedUsers;
-        } else {
-            result = lowerLevelRepository.getUsers();
+        if(!isInitialized()){
+            cachedUsers = lowerLevelRepository.getUsers();
             updateMap();
         }
-        return result;
+        return cachedUsers;
     }
 
     private void updateMap() {

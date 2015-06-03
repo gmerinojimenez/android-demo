@@ -1,11 +1,8 @@
 package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
-import com.gmerino.users.interactor.LoadUsers;
-import com.gmerino.users.view.fragment.UserListView;
-
-import java.util.List;
-
+import com.gmerino.users.interactor.LoadUser;
+import com.gmerino.users.view.fragment.UserDetailView;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -22,28 +19,32 @@ import java.util.List;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class UserListPresenterImpl implements UserListPresenter {
+/**
+ * Created by Guille on 31/05/2015.
+ */
+public class UserDetailPresenterImpl implements UserDetailPresenter {
 
-    private UserListView view;
+    private UserDetailView view;
 
-    private LoadUsers loadUsersInteractor;
+    private LoadUser loadUserInteractor;
 
-    public UserListPresenterImpl(LoadUsers loadUsers) {
-        this.loadUsersInteractor = loadUsers;
+    public UserDetailPresenterImpl(LoadUser loadUser){
+        this.loadUserInteractor = loadUser;
     }
 
     @Override
-    public void setView(UserListView view) {
-        this.view = view;
-    }
-
-    @Override
-    public void loadUsers() {
-        loadUsersInteractor.execute(new LoadUsers.Callback() {
+    public void loadUser(String id) {
+        loadUserInteractor.setUserId(id);
+        loadUserInteractor.execute(new LoadUser.Callback() {
             @Override
-            public void onUsersLoaded(List<User> users) {
-                view.onUsersLoaded(users);
+            public void onUserLoaded(User user) {
+                view.onUserLoaded(user);
             }
         });
+    }
+
+    @Override
+    public void setView(UserDetailView view) {
+        this.view = view;
     }
 }

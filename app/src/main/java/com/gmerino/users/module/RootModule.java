@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.gmerino.commons.Executor;
 import com.gmerino.commons.ThreadPool;
+import com.gmerino.data.repository.CacheUserRepository;
+import com.gmerino.data.repository.RestUserRepository;
+import com.gmerino.data.repository.UserRepository;
 import com.gmerino.users.App;
 
 import javax.inject.Named;
@@ -49,6 +52,14 @@ public class RootModule {
     @Singleton
     Executor provideExecutor() {
         return new ThreadPool();
+    }
+
+    @Provides
+    @Singleton
+    UserRepository provideUserRepository() {
+        RestUserRepository rest = new RestUserRepository();
+        CacheUserRepository userRepository = new CacheUserRepository(rest);
+        return userRepository;
     }
 
 }

@@ -2,13 +2,12 @@ package com.gmerino.users;
 
 import android.content.Context;
 
-import com.gmerino.data.repository.CacheUserRepository;
-import com.gmerino.data.repository.RestUserRepository;
-import com.gmerino.data.repository.UserRepository;
+import com.gmerino.users.interactor.LoadUser;
+import com.gmerino.users.interactor.LoadUserImpl;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.LoadUsersImpl;
 import com.gmerino.users.presenter.UserDetailPresenter;
-import com.gmerino.users.presenter.UserDetailPresenterMock;
+import com.gmerino.users.presenter.UserDetailPresenterImpl;
 import com.gmerino.users.presenter.UserListPresenter;
 import com.gmerino.users.presenter.UserListPresenterImpl;
 import com.gmerino.users.view.activity.UserDetailActivity;
@@ -17,7 +16,6 @@ import com.gmerino.users.view.fragment.UserDetailFragment;
 import com.gmerino.users.view.fragment.UserListFragment;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -58,27 +56,25 @@ public class ActivityModule {
     }
 
     @Provides
-    UserListPresenter provideUserListPresenter(UserRepository repository, LoadUsers loadUsers) {
-        UserListPresenter presenter = new UserListPresenterImpl(repository, loadUsers);
+    UserListPresenter provideUserListPresenter(LoadUsers loadUsers) {
+        UserListPresenter presenter = new UserListPresenterImpl(loadUsers);
         return presenter;
     }
 
     @Provides
-    UserDetailPresenter provideUserDetailPresenter() {
-        UserDetailPresenter presenter = new UserDetailPresenterMock();
+    UserDetailPresenter provideUserDetailPresenter(LoadUser loadUser) {
+        UserDetailPresenter presenter = new UserDetailPresenterImpl(loadUser);
         return presenter;
     }
 
-    @Provides
-    @Singleton
-    UserRepository provideUserRepository() {
-        RestUserRepository rest = new RestUserRepository();
-        CacheUserRepository userRepository = new CacheUserRepository(rest);
-        return userRepository;
-    }
 
     @Provides
     LoadUsers provideLoadUsers(LoadUsersImpl impl){
+        return impl;
+    }
+
+    @Provides
+    LoadUser provideLoadUser(LoadUserImpl impl){
         return impl;
     }
 

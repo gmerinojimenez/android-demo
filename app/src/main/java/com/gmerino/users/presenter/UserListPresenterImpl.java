@@ -1,7 +1,6 @@
 package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
-import com.gmerino.data.repository.UserRepository;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;
@@ -34,9 +33,7 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     private LoadUsers loadUsersInteractor;
 
-    public UserListPresenterImpl(UserRepository userRepository,
-                                 LoadUsers loadUsers) {
-        this.userRepository = userRepository;
+    public UserListPresenterImpl(LoadUsers loadUsers) {
         this.loadUsersInteractor = loadUsers;
     }
 

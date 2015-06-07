@@ -122,10 +122,10 @@ public class UserListActivity extends BaseActivity
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
-//            Bundle arguments = new Bundle();
-//            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
+            Bundle arguments = new Bundle();
+            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
             UserDetailFragment fragment = new UserDetailFragment();
-//            fragment.setArguments(arguments);
+            fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .replace(R.id.user_detail_container, fragment)
                     .commit();
@@ -134,7 +134,7 @@ public class UserListActivity extends BaseActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, UserDetailActivity.class);
-//            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }

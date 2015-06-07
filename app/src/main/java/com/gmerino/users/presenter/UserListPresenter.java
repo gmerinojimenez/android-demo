@@ -1,6 +1,6 @@
 package com.gmerino.users.presenter;
 
-import com.domain.user.data.User;
+import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;
 
 
@@ -25,6 +25,8 @@ import com.gmerino.users.view.fragment.UserListView;
 public interface UserListPresenter {
 
     void setView(UserListView view);
+
+    void setProgressView(ProgressView progressView);
 
     void loadUsers();
 }

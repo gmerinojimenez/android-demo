@@ -3,10 +3,14 @@ package com.gmerino.users.view.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.gmerino.users.R;
@@ -18,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import butterknife.InjectView;
 
 
 /*
@@ -48,6 +54,12 @@ public class UserListActivity extends BaseActivity
 //    private boolean firstTime = true;
 
     private SwipeRefreshLayout swipeLayout;
+
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @InjectView(R.id.toolbar_progress)
+    ProgressBar progressBar;
 
     @Inject
     UserListPresenter presenter;
@@ -163,6 +175,52 @@ public class UserListActivity extends BaseActivity
                 searchManager.getSearchableInfo(getComponentName()));
 
         return true;
+    }
+
+
+
+    private RecyclerView.OnScrollListener recyclerScrollListener =
+            new RecyclerView.OnScrollListener() {
+
+                public boolean flag;
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView,
+                                       int dx, int dy) {
+
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    // Is scrolling up
+                    if (dy > 10) {
+
+                        if (!flag) {
+
+                            showToolbar();
+                            flag = true;
+                        }
+
+                        // Is scrolling down
+                    } else if (dy < -10) {
+
+                        if (flag) {
+
+                            hideToolbar();
+                            flag = false;
+                        }
+                    }
+                }
+            };
+
+    private void showToolbar() {
+
+        toolbar.startAnimation(AnimationUtils.loadAnimation(this,
+                R.anim.translate_up_off));
+    }
+
+    private void hideToolbar() {
+
+        toolbar.startAnimation(AnimationUtils.loadAnimation(this,
+                R.anim.translate_up_on));
     }
 
 }

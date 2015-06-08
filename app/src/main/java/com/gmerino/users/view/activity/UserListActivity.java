@@ -3,8 +3,8 @@ package com.gmerino.users.view.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 /*
@@ -47,7 +50,8 @@ public class UserListActivity extends BaseActivity
 
 //    private boolean firstTime = true;
 
-    private SwipeRefreshLayout swipeLayout;
+    @InjectView(R.id.swipe_container)
+    SwipeRefreshLayout swipeLayout;
 
     @Inject
     UserListPresenter presenter;
@@ -55,9 +59,11 @@ public class UserListActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_user_list);
 
-        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        ButterKnife.inject(this);
+
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,

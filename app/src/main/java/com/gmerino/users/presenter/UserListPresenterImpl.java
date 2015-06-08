@@ -1,6 +1,7 @@
 package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
+import com.gmerino.data.repository.UserRepository;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;

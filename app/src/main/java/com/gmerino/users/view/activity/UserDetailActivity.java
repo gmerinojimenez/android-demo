@@ -1,14 +1,12 @@
 package com.gmerino.users.view.activity;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.gmerino.users.R;
-import com.gmerino.users.view.activity.UserListActivity;
 import com.gmerino.users.view.fragment.UserDetailFragment;
 
 import java.util.ArrayList;
@@ -45,9 +43,6 @@ public class UserDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
-
-        // Show the Up button in the action bar.
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity

@@ -1,28 +1,3 @@
-package com.gmerino.users.view.activity;
-
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.widget.SearchView;
-
-import com.gmerino.users.R;
-import com.gmerino.users.presenter.UserListPresenter;
-import com.gmerino.users.view.fragment.UserDetailFragment;
-import com.gmerino.users.view.fragment.UserListFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
-
 /*
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -38,137 +13,44 @@ import butterknife.InjectView;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class UserListActivity extends BaseActivity
-        implements SwipeRefreshLayout.OnRefreshListener, UserListFragment.Callback {
+apply plugin: 'com.android.application'
 
-    private static final String TAG = UserListActivity.class.getCanonicalName();
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
-//    private boolean firstTime = true;
-
-    @InjectView(R.id.swipe_container)
-    SwipeRefreshLayout swipeLayout;
-
-    @Inject
-    UserListPresenter presenter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_user_list);
-
-        ButterKnife.inject(this);
-
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        if (findViewById(R.id.user_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
-
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            ((UserListFragment) getFragmentManager()
-                    .findFragmentById(R.id.user_list))
-                    .setActivateOnItemClick(true);
-        }
-
-        ((UserListFragment) getFragmentManager()
-                .findFragmentById(R.id.user_list))
-                .setCallback(this);
-
-        handleIntent(getIntent());
+    defaultConfig {
+        applicationId "com.gmerino.users"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
     }
-
-    @Override
-    protected List<Object> getModules() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-
-//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Log.d(TAG, "Searching " + query);
-//            UserHandler.getInstance().setFilter(query);
-//        }
-    }
-
-    @Override
-    public void onItemSelected(String id) {
-        if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(UserDetailFragment.ARG_ITEM_ID, id);
-            UserDetailFragment fragment = new UserDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.user_detail_container, fragment)
-                    .commit();
-
-        } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, UserDetailActivity.class);
-            detailIntent.putExtra(UserDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-//    @Override
-//    public void onFragmentAttached() {
-//        if (firstTime) {
-//            refresh();
-//        }
-//    }
-
-//    private void refresh() {
-//        firstTime = false;
-//        UserHandler.getInstance().populate(40);
-//    }
-
-    @Override
-    public void onRefresh() {
-//        UserHandler.getInstance().setFilter("");
-//        refresh();
-//
-//        swipeLayout.setRefreshing(false);
-//        Toast.makeText(this, getString(R.string.update_info),
-//                Toast.LENGTH_SHORT).show();
+    packagingOptions {
+        // Exclude file to avoid
+        // Error: Duplicate files during packaging of APK
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile project(':data')
+    compile project(':domain')
+    compile project(':commons')
+    compile 'com.squareup.dagger:dagger:1.2.2'
+    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-
-        return true;
-    }
-
+    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:palette-v7:21.0.0'
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile 'com.jakewharton:butterknife:6.0.0'
 }

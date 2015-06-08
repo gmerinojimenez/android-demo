@@ -2,6 +2,7 @@ package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
 import com.gmerino.users.interactor.LoadUser;
+import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserDetailView;
 
 /*
@@ -26,6 +27,8 @@ public class UserDetailPresenterImpl implements UserDetailPresenter {
 
     private UserDetailView view;
 
+    private ProgressView progressView;
+
     private LoadUser loadUserInteractor;
 
     public UserDetailPresenterImpl(LoadUser loadUser){
@@ -46,5 +49,10 @@ public class UserDetailPresenterImpl implements UserDetailPresenter {
     @Override
     public void setView(UserDetailView view) {
         this.view = view;
+    }
+
+    @Override
+    public void setProgressView(ProgressView view) {
+        this.progressView = view;
     }
 }

@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /*
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -39,12 +42,23 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
      */
     public static final String ARG_ITEM_ID = "item_id";
 
-    private ImageView photo;
-    private TextView name;
-    private TextView gender;
-    private TextView location;
-    private TextView date;
-    private TextView email;
+    @InjectView(R.id.photo)
+    ImageView photo;
+
+    @InjectView(R.id.name)
+    TextView name;
+
+    @InjectView(R.id.gender)
+    TextView gender;
+
+    @InjectView(R.id.location)
+    TextView location;
+
+    @InjectView(R.id.date)
+    TextView date;
+
+    @InjectView(R.id.email)
+    TextView email;
 
     @Inject
     UserDetailPresenter presenter;
@@ -74,14 +88,7 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_user_detail, container, false);
-
-        photo = (ImageView) rootView.findViewById(R.id.photo);
-        name = (TextView) rootView.findViewById(R.id.name);
-        gender = (TextView) rootView.findViewById(R.id.gender);
-        location = (TextView) rootView.findViewById(R.id.location);
-        date = (TextView) rootView.findViewById(R.id.date);
-        email = (TextView) rootView.findViewById(R.id.email);
-
+        ButterKnife.inject(this, rootView);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment

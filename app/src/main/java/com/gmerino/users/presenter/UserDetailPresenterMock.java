@@ -3,6 +3,7 @@ package com.gmerino.users.presenter;
 import com.domain.user.data.Location;
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
+import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserDetailView;
 
 /*
@@ -26,6 +27,7 @@ import com.gmerino.users.view.fragment.UserDetailView;
 public class UserDetailPresenterMock implements UserDetailPresenter {
 
     private UserDetailView view;
+    private ProgressView progressView;
 
     @Override
     public void loadUser(String id) {
@@ -47,5 +49,10 @@ public class UserDetailPresenterMock implements UserDetailPresenter {
     @Override
     public void setView(UserDetailView view) {
         this.view = view;
+    }
+
+    @Override
+    public void setProgressView(ProgressView progressView) {
+        this.progressView = progressView;
     }
 }

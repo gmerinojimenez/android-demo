@@ -2,6 +2,7 @@ package com.gmerino.users.presenter;
 
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
+import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;
 
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class UserListPresenterMock implements UserListPresenter {
     private List<User> users = new ArrayList<>();
 
     private UserListView view;
+
+    private ProgressView progressView;
 
     public UserListPresenterMock() {
         User user = new User();
@@ -68,6 +71,11 @@ public class UserListPresenterMock implements UserListPresenter {
     @Override
     public void setView(UserListView view) {
         this.view = view;
+    }
+
+    @Override
+    public void setProgressView(ProgressView progressView) {
+        this.progressView = progressView;
     }
 
     @Override

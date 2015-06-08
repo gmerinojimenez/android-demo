@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserDetailPresenter;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
@@ -107,9 +108,7 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
             date.setText(currentUser.getRegistered());
             email.setText(currentUser.getEmail());
 
-//            SetImageRunnable aux = new SetImageRunnable(currentUser.getPicture().getLarge(), photo);
-//            Thread t = new Thread(aux);
-//            t.start();
+            Picasso.with(getActivity()).load(currentUser.getPicture().getLarge()).into(photo);
         }
     }
 

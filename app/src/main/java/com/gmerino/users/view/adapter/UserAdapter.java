@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenterImpl;
-import com.gmerino.users.utils.SetImageRunnable;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,16 +85,6 @@ public class UserAdapter extends ArrayAdapter<User> {
     }
 
 
-//    @Override
-//    public void registerDataSetObserver(DataSetObserver observer) {
-//        Log.d("borrame", "registerDataSetObserver");
-//    }
-//
-//    @Override
-//    public void unregisterDataSetObserver(DataSetObserver observer) {
-//        Log.d("borrame", "unregisterDataSetObserver");
-//    }
-
     @Override
     public int getCount() {
         return users.size();
@@ -138,6 +128,8 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.name.setText(user.getName().toString());
             holder.email.setText(user.getEmail());
             holder.phone.setText(user.getPhone());
+
+            Picasso.with(activity).load(user.getPicture().getThumbnail()).into(holder.picture);
 
 //            SetImageRunnable aux = new SetImageRunnable(user.getPicture().getThumbnail(), holder.picture);
 //            Thread t = new Thread(aux);

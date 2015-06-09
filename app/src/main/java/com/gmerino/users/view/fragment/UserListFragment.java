@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.adapter.UserAdapter;
 
 import java.util.List;
@@ -37,7 +38,7 @@ import javax.inject.Inject;
  * 'activated' state upon selection. This helps indicate which item is
  * currently being viewed in a {@link UserDetailFragment}.
  */
-public class UserListFragment extends ListFragment implements UserListView {
+public class UserListFragment extends ListFragment implements UserListView, ProgressView {
 
     private static final String TAG = UserListFragment.class.getCanonicalName();
 
@@ -65,6 +66,16 @@ public class UserListFragment extends ListFragment implements UserListView {
     private UserAdapter adapter;
 
     private FragmentInjector injector = new FragmentInjector(this);
+
+    @Override
+    public void showProgress() {
+        callback.showProgress(true);
+    }
+
+    @Override
+    public void dismissProgress() {
+        callback.showProgress(false);
+    }
 //
 //    @Override
 //    public void update(Observable observable, Object data) {
@@ -85,6 +96,8 @@ public class UserListFragment extends ListFragment implements UserListView {
          * Callback for when an item has been selected.
          */
         void onItemSelected(String id);
+
+        void showProgress(boolean show);
     }
 //
 //    /**
@@ -118,7 +131,7 @@ public class UserListFragment extends ListFragment implements UserListView {
         adapter = new UserAdapter(getActivity(), R.id.user_list);
 
         presenter.setView(this);
-        presenter.loadUsers();
+        presenter.setProgressView(this);
 
         setListAdapter(adapter);
     }
@@ -197,5 +210,9 @@ public class UserListFragment extends ListFragment implements UserListView {
 
     public void setCallback(Callback callback){
         this.callback = callback;
+    }
+
+    public void refresh(){
+        presenter.loadUsers();
     }
 }

@@ -56,6 +56,8 @@ public class UserListActivity extends BaseActivity
     @Inject
     UserListPresenter presenter;
 
+    private UserListFragment listFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,9 @@ public class UserListActivity extends BaseActivity
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        listFragment = ((UserListFragment) getFragmentManager()
+                .findFragmentById(R.id.user_list));
+
         if (findViewById(R.id.user_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -79,14 +84,11 @@ public class UserListActivity extends BaseActivity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((UserListFragment) getFragmentManager()
-                    .findFragmentById(R.id.user_list))
-                    .setActivateOnItemClick(true);
+            listFragment.setActivateOnItemClick(true);
         }
 
-        ((UserListFragment) getFragmentManager()
-                .findFragmentById(R.id.user_list))
-                .setCallback(this);
+        listFragment.setCallback(this);
+        listFragment.refresh();
 
         handleIntent(getIntent());
     }
@@ -133,26 +135,15 @@ public class UserListActivity extends BaseActivity
         }
     }
 
-//    @Override
-//    public void onFragmentAttached() {
-//        if (firstTime) {
-//            refresh();
-//        }
-//    }
+    @Override
+    public void showProgress(boolean show) {
+        swipeLayout.setRefreshing(show);
+    }
 
-//    private void refresh() {
-//        firstTime = false;
-//        UserHandler.getInstance().populate(40);
-//    }
 
     @Override
     public void onRefresh() {
-//        UserHandler.getInstance().setFilter("");
-//        refresh();
-//
-//        swipeLayout.setRefreshing(false);
-//        Toast.makeText(this, getString(R.string.update_info),
-//                Toast.LENGTH_SHORT).show();
+        listFragment.refresh();
     }
 
     @Override

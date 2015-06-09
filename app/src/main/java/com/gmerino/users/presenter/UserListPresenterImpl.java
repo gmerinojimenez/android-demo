@@ -50,10 +50,12 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     @Override
     public void loadUsers() {
+        progressView.showProgress();
         loadUsersInteractor.execute(new LoadUsers.Callback() {
             @Override
             public void onUsersLoaded(List<User> users) {
                 view.onUsersLoaded(users);
+                progressView.dismissProgress();
             }
         });
     }

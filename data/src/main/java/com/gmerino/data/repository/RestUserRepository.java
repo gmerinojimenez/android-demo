@@ -83,6 +83,11 @@ public class RestUserRepository implements UserRepository {
         return getFakeUser();
     }
 
+    @Override
+    public void persist(User user) {
+        //Nothing to do
+    }
+
     private User getFakeUser() {
         User user = new User();
         Name name = new Name();

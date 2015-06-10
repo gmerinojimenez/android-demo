@@ -59,6 +59,8 @@ public class User {
     @Expose
     private String nationality;
 
+    private boolean starred;
+
     /**
      * @return The gender
      */
@@ -399,6 +401,14 @@ public class User {
     public User withNationality(String nationality) {
         this.nationality = nationality;
         return this;
+    }
+
+    public boolean getStarred() {
+        return starred;
+    }
+
+    public void setStarred(boolean starred){
+        this.starred = starred;
     }
 
     static class UserComparator implements Comparator<User> {

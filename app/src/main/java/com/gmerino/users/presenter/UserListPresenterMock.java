@@ -82,4 +82,9 @@ public class UserListPresenterMock implements UserListPresenter {
     public void loadUsers() {
         view.onUsersLoaded(users);
     }
+
+    @Override
+    public void setStarred(User currentUser, boolean isChecked) {
+        currentUser.setStarred(isChecked);
+    }
 }

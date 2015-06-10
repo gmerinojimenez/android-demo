@@ -6,6 +6,8 @@ import com.gmerino.users.interactor.LoadUser;
 import com.gmerino.users.interactor.LoadUserImpl;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.LoadUsersImpl;
+import com.gmerino.users.interactor.PersistUser;
+import com.gmerino.users.interactor.PersistUserImpl;
 import com.gmerino.users.presenter.UserDetailPresenter;
 import com.gmerino.users.presenter.UserDetailPresenterImpl;
 import com.gmerino.users.presenter.UserListPresenter;
@@ -56,8 +58,8 @@ public class ActivityModule {
     }
 
     @Provides
-    UserListPresenter provideUserListPresenter(LoadUsers loadUsers) {
-        UserListPresenter presenter = new UserListPresenterImpl(loadUsers);
+    UserListPresenter provideUserListPresenter(LoadUsers loadUsers, PersistUser persistUser) {
+        UserListPresenter presenter = new UserListPresenterImpl(loadUsers, persistUser);
         return presenter;
     }
 
@@ -75,6 +77,11 @@ public class ActivityModule {
 
     @Provides
     LoadUser provideLoadUser(LoadUserImpl impl){
+        return impl;
+    }
+
+    @Provides
+    PersistUser providePersistUser(PersistUserImpl impl) {
         return impl;
     }
 

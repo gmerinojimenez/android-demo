@@ -1,8 +1,8 @@
 package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
-import com.gmerino.data.repository.UserRepository;
 import com.gmerino.users.interactor.LoadUsers;
+import com.gmerino.users.interactor.PersistUser;
 import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;
 
@@ -30,12 +30,13 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     private ProgressView progressView;
 
-    private UserRepository userRepository;
-
     private LoadUsers loadUsersInteractor;
+    private PersistUser persistUserInteractor;
 
-    public UserListPresenterImpl(LoadUsers loadUsers) {
+    public UserListPresenterImpl(LoadUsers loadUsers,
+                                 PersistUser persistUser) {
         this.loadUsersInteractor = loadUsers;
+        this.persistUserInteractor = persistUser;
     }
 
     @Override
@@ -58,5 +59,20 @@ public class UserListPresenterImpl implements UserListPresenter {
                 progressView.dismissProgress();
             }
         });
+    }
+
+    @Override
+    public void setStarred(User currentUser, boolean starred) {
+        progressView.showProgress();
+        currentUser.setStarred(starred);
+        persistUserInteractor.persist(currentUser, new PersistUser.Callback() {
+                    @Override
+                    public void onUserPersisted(User user) {
+                        //Nothing to do now
+                        progressView.dismissProgress();
+                    }
+                }
+
+        );
     }
 }

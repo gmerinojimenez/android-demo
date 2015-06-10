@@ -1,8 +1,4 @@
-package com.gmerino.data.repository;
-
-import com.domain.user.data.User;
-
-import java.util.List;
+package com.gmerino.users.interactor;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -19,14 +15,16 @@ import java.util.List;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.domain.user.data.User;
+
 /**
- * Created by Guille on 31/05/2015.
+ * Created by Guille on 10/06/2015.
  */
-public interface UserRepository {
+public interface PersistUser {
 
-    List<User> getUsers();
+    interface Callback {
+        void onUserPersisted(User user);
+    }
 
-    User getUser(final String userId);
-
-    void persist(User user);
+    void persist(User user, Callback callback);
 }

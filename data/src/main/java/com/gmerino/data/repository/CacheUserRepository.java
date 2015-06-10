@@ -66,4 +66,9 @@ public class CacheUserRepository implements UserRepository {
         }
         return result;
     }
+
+    @Override
+    public void persist(User user) {
+        //Nothing to do
+    }
 }

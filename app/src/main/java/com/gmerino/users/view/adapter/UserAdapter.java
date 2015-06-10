@@ -7,12 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.domain.user.data.User;
 import com.gmerino.users.R;
-import com.gmerino.users.presenter.UserListPresenterImpl;
+import com.gmerino.users.presenter.UserListPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,14 +43,14 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     private Activity activity;
 
+    private UserListPresenter presenter;
+
     @Inject
-    UserListPresenterImpl presenter;
-
-
-    public UserAdapter(Activity activity, int layoutResourceId) {
+    public UserAdapter(Activity activity, int layoutResourceId, UserListPresenter presenter) {
         super(activity, layoutResourceId);
 
         this.activity = activity;
+        this.presenter = presenter;
     }
 
     @Override
@@ -74,14 +75,29 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     }
 
+    private class StarredListener implements CompoundButton.OnCheckedChangeListener {
+
+        private User currentUser;
+
+        public void setCurrentUser(User currentUser){
+            this.currentUser = currentUser;
+        }
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if(currentUser != null){
+                presenter.setStarred(currentUser, isChecked);
+            }
+        }
+    }
 
     private class ViewHolder {
-        public TextView name;
-        public TextView email;
-        public TextView phone;
-        public ImageView picture;
-        public CheckBox starred;
-        public Button delete;
+        TextView name;
+        TextView email;
+        TextView phone;
+        ImageView picture;
+        CheckBox starred;
+        Button delete;
+        StarredListener starredListener = new StarredListener();
     }
 
 
@@ -115,6 +131,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.picture = (ImageView) convertView.findViewById(R.id.picture);
             holder.starred = (CheckBox) convertView.findViewById(R.id.starred);
             holder.delete = (Button) convertView.findViewById(R.id.delete);
+            holder.starred.setOnCheckedChangeListener(holder.starredListener);
 
             convertView.setTag(holder);
         } else {
@@ -131,11 +148,9 @@ public class UserAdapter extends ArrayAdapter<User> {
 
             Picasso.with(activity).load(user.getPicture().getThumbnail()).into(holder.picture);
 
-//            SetImageRunnable aux = new SetImageRunnable(user.getPicture().getThumbnail(), holder.picture);
-//            Thread t = new Thread(aux);
-//            t.start();
-
-//            holder.starred.setChecked(UserHandler.getInstance().isUserStarred(user));
+            holder.starredListener.setCurrentUser(null);
+            holder.starred.setChecked(user.getStarred());
+            holder.starredListener.setCurrentUser(user);
 
 //            //This should be on viewholder
 //            holder.starred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

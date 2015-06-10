@@ -105,7 +105,7 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new UserAdapter(getActivity(), R.id.user_list);
+        adapter = new UserAdapter(getActivity(), R.id.user_list, presenter);
 
         presenter.setView(this);
         presenter.setProgressView(this);

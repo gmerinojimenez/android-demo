@@ -140,6 +140,11 @@ public class UserListActivity extends BaseActivity
         swipeLayout.setRefreshing(show);
     }
 
+    @Override
+    public void onListScrolled(int itemPos) {
+        swipeLayout.setEnabled(itemPos == 0);
+    }
+
 
     @Override
     public void onRefresh() {

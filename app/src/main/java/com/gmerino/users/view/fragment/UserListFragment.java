@@ -5,6 +5,7 @@ import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.domain.user.data.User;
@@ -98,6 +99,8 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
         void onItemSelected(String id);
 
         void showProgress(boolean show);
+
+        void onListScrolled(int itemPos);
     }
 //
 //    /**
@@ -206,6 +209,17 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
     public void onUsersLoaded(List<User> users) {
         adapter.updateUsers(users, null);
         adapter.notifyDataSetChanged();
+
+        getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                callback.onListScrolled(firstVisibleItem);
+            }
+        });
     }
 
     public void setCallback(Callback callback){

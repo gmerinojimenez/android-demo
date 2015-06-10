@@ -52,13 +52,13 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-    //
-//    /**
-//     * The fragment's current callback object, which is notified of list item
-//     * clicks.
-//     */
+
+    /**
+     * The fragment's current callback object, which is notified of list item
+     * clicks.
+     */
     private Callback callback = null;
-//
+
     /**
      * The current activated item position. Only used on tablets.
      */
@@ -77,15 +77,6 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
     public void dismissProgress() {
         callback.showProgress(false);
     }
-//
-//    @Override
-//    public void update(Observable observable, Object data) {
-//        //Let's reload the data...
-//        Log.d(TAG, "Reloading data");
-//        adapter.setUsers(UserHandler.getInstance().getUserList(), UserHandler.getInstance().getDeletedUsers());
-//        adapter.notifyDataSetChanged();
-//    }
-//
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -102,22 +93,6 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
 
         void onListScrolled(int itemPos);
     }
-//
-//    /**
-//     * A dummy implementation of the {@link Callback} interface that does
-//     * nothing. Used only when this fragment is not attached to an activity.
-//     */
-//    private static Callback sDummyCallbacks = new Callback() {
-//        @Override
-//        public void onItemSelected(String id) {
-//        }
-//
-//        @Override
-//        public void onFragmentAttached() {
-//
-//        }
-//    };
-//
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -130,7 +105,6 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-////        adapter = new UserAdapter(getActivity(), R.id.user_list, UserHandler.getInstance().getUserList());
         adapter = new UserAdapter(getActivity(), R.id.user_list);
 
         presenter.setView(this);
@@ -171,7 +145,6 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         callback.onItemSelected(((User) listView.getAdapter().getItem(position)).getMd5());
-//        presenter.onUserClicked((User) listView.getAdapter().getItem(position));
     }
 
     @Override

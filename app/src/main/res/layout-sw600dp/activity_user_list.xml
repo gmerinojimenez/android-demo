@@ -30,15 +30,20 @@
     master/detail flow.
     
     -->
-
-    <fragment
-        android:id="@+id/user_list"
-        android:name="com.gmerino.users.view.fragment.UserListFragment"
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout="@android:layout/list_content" />
+        android:layout_weight="1">
+
+        <fragment
+            android:id="@+id/user_list"
+            android:name="com.gmerino.users.view.fragment.UserListFragment"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@android:layout/list_content" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:id="@+id/user_detail_container"

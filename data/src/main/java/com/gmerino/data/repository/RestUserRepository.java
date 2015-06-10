@@ -1,5 +1,7 @@
 package com.gmerino.data.repository;
 
+import android.util.Log;
+
 import com.domain.user.data.Location;
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
@@ -33,6 +35,7 @@ import retrofit.RestAdapter;
 public class RestUserRepository implements UserRepository {
 
     private static final Integer USERS_PER_REQUEST = 20;
+    private static final String TAG = RestUserRepository.class.getCanonicalName();
 
     private void populate(int howMany) {
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -59,23 +62,25 @@ public class RestUserRepository implements UserRepository {
 
     @Override
     public List<User> getUsers() {
+        List<User> userList = new ArrayList<>();
+        try {
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(RandomUserRestAPI.SERVER_URL)
+                    .build();
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(RandomUserRestAPI.SERVER_URL)
-                .build();
+            RandomUserRestAPI service = restAdapter.create(RandomUserRestAPI.class);
 
-        RandomUserRestAPI service = restAdapter.create(RandomUserRestAPI.class);
+            UserResponse response = service.getList(USERS_PER_REQUEST);
 
-        UserResponse response = service.getList(USERS_PER_REQUEST);
-
-        List<User> userList = new ArrayList<>(response.getResults().size());
-
-        for(Result result: response.getResults()){
-            User user = result.getUser();
-            userList.add(user);
+            for (Result result : response.getResults()) {
+                User user = result.getUser();
+                userList.add(user);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error", e);
         }
-
         return userList;
+
     }
 
     @Override

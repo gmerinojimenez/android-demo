@@ -69,6 +69,6 @@ public class CacheUserRepository implements UserRepository {
 
     @Override
     public void persist(User user) {
-        //Nothing to do
+        lowerLevelRepository.persist(user);
     }
 }

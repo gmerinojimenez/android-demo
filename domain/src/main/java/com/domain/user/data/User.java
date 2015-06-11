@@ -411,7 +411,7 @@ public class User {
         this.starred = starred;
     }
 
-    static class UserComparator implements Comparator<User> {
+    public static class UserComparator implements Comparator<User> {
 
         @Override
         public int compare(User lhs, User rhs) {

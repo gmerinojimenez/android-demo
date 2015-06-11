@@ -2,12 +2,14 @@ package com.gmerino.users.module;
 
 import android.content.Context;
 
+import com.domain.user.data.User;
 import com.gmerino.commons.Executor;
 import com.gmerino.commons.ThreadPool;
 import com.gmerino.data.repository.CacheUserRepository;
 import com.gmerino.data.repository.RestUserRepository;
 import com.gmerino.data.repository.UserRepository;
 import com.gmerino.users.App;
+import com.gmerino.users.data.UserFilteredRepository;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -59,7 +61,8 @@ public class RootModule {
     UserRepository provideUserRepository() {
         RestUserRepository rest = new RestUserRepository();
         CacheUserRepository userRepository = new CacheUserRepository(rest);
-        return userRepository;
+        User.UserComparator comparator = new User.UserComparator();
+        UserFilteredRepository filterableRepository = new UserFilteredRepository(userRepository, comparator);
+        return filterableRepository;
     }
-
 }

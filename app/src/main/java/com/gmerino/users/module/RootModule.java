@@ -5,6 +5,7 @@ import android.content.Context;
 import com.domain.user.data.User;
 import com.gmerino.commons.Executor;
 import com.gmerino.commons.ThreadPool;
+import com.gmerino.data.net.RandomUserRestAPI;
 import com.gmerino.data.repository.CacheUserRepository;
 import com.gmerino.data.repository.RestUserRepository;
 import com.gmerino.data.repository.UserRepository;
@@ -16,6 +17,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit.RestAdapter;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -59,7 +61,11 @@ public class RootModule {
     @Provides
     @Singleton
     UserRepository provideUserRepository() {
-        RestUserRepository rest = new RestUserRepository();
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(RandomUserRestAPI.SERVER_URL)
+                .build();
+        RandomUserRestAPI service = restAdapter.create(RandomUserRestAPI.class);
+        RestUserRepository rest = new RestUserRepository(service);
         CacheUserRepository userRepository = new CacheUserRepository(rest);
         User.UserComparator comparator = new User.UserComparator();
         UserFilteredRepository filterableRepository = new UserFilteredRepository(userRepository, comparator);

@@ -12,8 +12,6 @@ import com.gmerino.data.net.UserResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.RestAdapter;
-
 /*
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -37,40 +35,18 @@ public class RestUserRepository implements UserRepository {
     private static final Integer USERS_PER_REQUEST = 20;
     private static final String TAG = RestUserRepository.class.getCanonicalName();
 
-    private void populate(int howMany) {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(RandomUserRestAPI.SERVER_URL)
-                .build();
+    private final RandomUserRestAPI randomUserRestAPI;
 
-        RandomUserRestAPI service = restAdapter.create(RandomUserRestAPI.class);
-
-        service.getList(USERS_PER_REQUEST);
-
-//        service.getList(howMany, new Callback<UserResponse>() {
-//            @Override
-//            public void success(UserResponse users, Response response) {
-////                    userList = users;
-//                fillStructures(users);
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError retrofitError) {
-//                Log.e(TAG, "Error reading from server");
-//            }
-//        });
+    public RestUserRepository(RandomUserRestAPI randomUserRestAPI){
+        this.randomUserRestAPI = randomUserRestAPI;
     }
 
     @Override
     public List<User> getUsers() {
         List<User> userList = new ArrayList<>();
         try {
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(RandomUserRestAPI.SERVER_URL)
-                    .build();
 
-            RandomUserRestAPI service = restAdapter.create(RandomUserRestAPI.class);
-
-            UserResponse response = service.getList(USERS_PER_REQUEST);
+            UserResponse response = randomUserRestAPI.getList(USERS_PER_REQUEST);
 
             for (Result result : response.getResults()) {
                 User user = result.getUser();

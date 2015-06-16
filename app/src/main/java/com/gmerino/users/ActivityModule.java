@@ -84,6 +84,4 @@ public class ActivityModule {
     PersistUser providePersistUser(PersistUserImpl impl) {
         return impl;
     }
-
-
 }

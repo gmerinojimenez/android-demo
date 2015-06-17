@@ -71,9 +71,12 @@ public class UserFilteredRepository implements UserRepository, FilterableReposit
 
     @Override
     public void applyFilter(String filter) {
-        users.clear();
+        getUsers();
         userMap.clear();
-        for(User user : lowerLevelRepository.getUsers()){
+        List<User> provisionalUsers =  new ArrayList<>(users);
+
+        users.clear();
+        for(User user : provisionalUsers){
             if(passTheFilter(filter, user)){
                 users.add(user);
                 userMap.put(user.getMd5(), user);

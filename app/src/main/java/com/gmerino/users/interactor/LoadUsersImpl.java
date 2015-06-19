@@ -18,13 +18,13 @@ package com.gmerino.users.interactor;
 import com.domain.user.data.User;
 import com.gmerino.commons.Executor;
 import com.gmerino.commons.Interactor;
+import com.gmerino.commons.MainThreadExecutor;
 import com.gmerino.data.repository.UserRepository;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import retrofit.android.MainThreadExecutor;
 
 /**
  * Created by Guille on 31/05/2015.
@@ -38,9 +38,9 @@ public class LoadUsersImpl implements Interactor, LoadUsers {
 
     @Inject
     public LoadUsersImpl(Executor executor,
-                         UserRepository userRepository) {
+                         UserRepository userRepository, com.gmerino.commons.MainThreadExecutor mainThreadExecutor) {
         this.executor = executor;
-        this.mainThreadExecutor = new MainThreadExecutor();
+        this.mainThreadExecutor = mainThreadExecutor;
         this.userRepository = userRepository;
     }
 

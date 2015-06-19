@@ -1,4 +1,4 @@
-package com.gmerino.users.interactor;
+package com.gmerino.users.presenter;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,10 @@ package com.gmerino.users.interactor;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 import com.domain.user.data.User;
-import com.gmerino.data.repository.UserRepository;
-import com.gmerino.users.FakeExecutor;
-import com.gmerino.users.FakeMainThreadExecutor;
+import com.gmerino.users.interactor.LoadUser;
+import com.gmerino.users.view.ProgressView;
+import com.gmerino.users.view.fragment.UserDetailView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,47 +26,59 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
- * Created by Guille on 12/06/2015.
+ * Created by Guille on 20/06/2015.
  */
-public class LoadUserTest {
+public class UserDetailPresenterTest {
 
     private static final String ANY_USER_ID = "1";
-    LoadUserImpl loadUser;
 
     @Mock
-    UserRepository userRepository;
+    UserDetailView view;
 
     @Mock
-    User user;
+    ProgressView progressView;
+
+    LoadUser loadUser = new FakeLoadUser();
+
+    UserDetailPresenterImpl userDetailPresenter;
 
     @Before
-    public void setup() {
+    public void setup(){
         MockitoAnnotations.initMocks(this);
 
-        loadUser = new LoadUserImpl(new FakeExecutor(),
-                userRepository, new FakeMainThreadExecutor());
-
-        when(userRepository.getUser(ANY_USER_ID)).thenReturn(user);
-        when(user.getMd5()).thenReturn(ANY_USER_ID);
+        userDetailPresenter = new UserDetailPresenterImpl(loadUser);
+        userDetailPresenter.setProgressView(progressView);
+        userDetailPresenter.setView(view);
     }
-
 
     @Test
-    public void shouldRetrieveAnUser() {
-        givenAnUserId();
-        LoadUser.Callback callback = mock(LoadUser.Callback.class);
+    public void testUserLoadedCallbackIsCalled(){
 
-        loadUser.execute(callback);
+        userDetailPresenter.loadUser(ANY_USER_ID);
 
-        verify(callback).onUserLoaded(isA(User.class));
+        verify(view).onUserLoaded(isA(User.class));
     }
 
-    private void givenAnUserId() {
-        loadUser.setUserId(ANY_USER_ID);
+
+    class FakeLoadUser implements LoadUser {
+
+        private User user;
+
+        @Override
+        public void execute(Callback callback) {
+            callback.onUserLoaded(user);
+        }
+
+        @Override
+        public void setUserId(String userId) {
+            user = new User();
+        }
     }
+
+
+
+
 }

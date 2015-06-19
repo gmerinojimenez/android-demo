@@ -61,7 +61,7 @@ public class UserFilteredRepositoryTest {
     public void setup(){
         MockitoAnnotations.initMocks(this);
         filteredRepository = new UserFilteredRepository(lowerLevelRepository, comparator);
-        setupGoodResponse();
+        setupExpectedResponse();
     }
 
 
@@ -119,7 +119,7 @@ public class UserFilteredRepositoryTest {
 
 
 
-    private void setupGoodResponse() {
+    private void setupExpectedResponse() {
         expectedResponse = new ArrayList<>(ANY_LIMIT);
 
         for(int i = 0; i < ANY_LIMIT; i++){

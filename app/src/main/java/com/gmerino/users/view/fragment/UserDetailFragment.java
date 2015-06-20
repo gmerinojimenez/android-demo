@@ -2,17 +2,25 @@ package com.gmerino.users.view.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserDetailPresenter;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import javax.inject.Inject;
 
@@ -41,6 +49,7 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
+    private static final int FADE_IN_TIME_MS = 1000;
 
     @InjectView(R.id.photo)
     ImageView photo;
@@ -59,6 +68,9 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
 
     @InjectView(R.id.email)
     TextView email;
+
+    @InjectView(R.id.container)
+    LinearLayout container;
 
     @Inject
     UserDetailPresenter presenter;
@@ -115,7 +127,74 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
             date.setText(currentUser.getRegistered());
             email.setText(currentUser.getEmail());
 
-            Picasso.with(getActivity()).load(currentUser.getPicture().getLarge()).into(photo);
+            loadPicture();
+        }
+    }
+
+    private void loadPicture() {
+        Target target = new Target() {
+
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                TransitionDrawable td = new TransitionDrawable(new Drawable[]{
+                        new ColorDrawable(android.R.color.transparent),
+                        new BitmapDrawable(getActivity().getResources(), bitmap)
+                });
+
+                photo.setImageDrawable(td);
+                td.startTransition(FADE_IN_TIME_MS);
+
+//                photo.setImageBitmap(bitmap);
+                generatePalette(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        Picasso.with(getActivity()).load(currentUser.getPicture().getLarge())
+                .into(target);
+
+    }
+
+    private void generatePalette(Bitmap bitmap) {
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                if (palette != null) {
+                    final Palette.Swatch darkVibrantSwatch = palette.getDarkVibrantSwatch();
+                    final Palette.Swatch darkMutedSwatch = palette.getDarkMutedSwatch();
+                    final Palette.Swatch lightVibrantSwatch = palette.getLightVibrantSwatch();
+                    final Palette.Swatch lightMutedSwatch = palette.getLightMutedSwatch();
+                    final Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+
+                    setDarkVibrants(darkVibrantSwatch);
+                    setDarkMuteds(darkMutedSwatch);
+
+                }
+            }
+
+
+        });
+    }
+
+    private void setDarkVibrants(Palette.Swatch swatch) {
+        if (swatch != null) {
+            name.setBackgroundColor(swatch.getRgb());
+            name.setTextColor(swatch.getTitleTextColor());
+        }
+    }
+    private void setDarkMuteds(Palette.Swatch swatch) {
+        if (swatch != null) {
+            container.setBackgroundColor(swatch.getRgb());
         }
     }
 

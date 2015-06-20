@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.gmerino.users.interactor.DeleteUser;
 import com.gmerino.users.interactor.DeleteUserImpl;
+import com.gmerino.users.interactor.FilterUsers;
+import com.gmerino.users.interactor.FilterUsersImpl;
 import com.gmerino.users.interactor.LoadUser;
 import com.gmerino.users.interactor.LoadUserImpl;
 import com.gmerino.users.interactor.LoadUsers;
@@ -20,6 +22,7 @@ import com.gmerino.users.view.fragment.UserDetailFragment;
 import com.gmerino.users.view.fragment.UserListFragment;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -60,10 +63,13 @@ public class ActivityModule {
     }
 
     @Provides
+    @Singleton
     UserListPresenter provideUserListPresenter(LoadUsers loadUsers,
                                                PersistUser persistUser,
-                                               DeleteUser deleteUser) {
-        UserListPresenter presenter = new UserListPresenterImpl(loadUsers, persistUser, deleteUser);
+                                               DeleteUser deleteUser,
+                                               FilterUsers filterUsers) {
+        UserListPresenter presenter = new UserListPresenterImpl(loadUsers, persistUser,
+                deleteUser, filterUsers);
         return presenter;
     }
 
@@ -72,7 +78,6 @@ public class ActivityModule {
         UserDetailPresenter presenter = new UserDetailPresenterImpl(loadUser);
         return presenter;
     }
-
 
     @Provides
     LoadUsers provideLoadUsers(LoadUsersImpl impl){
@@ -91,6 +96,11 @@ public class ActivityModule {
 
     @Provides
     DeleteUser provideDeleteUser(DeleteUserImpl impl) {
+        return impl;
+    }
+
+    @Provides
+    FilterUsers provideFilterUsers(FilterUsersImpl impl) {
         return impl;
     }
 }

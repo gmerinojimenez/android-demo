@@ -2,6 +2,7 @@ package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
 import com.gmerino.users.interactor.DeleteUser;
+import com.gmerino.users.interactor.FilterUsers;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.PersistUser;
 import com.gmerino.users.view.ProgressView;
@@ -34,13 +35,16 @@ public class UserListPresenterImpl implements UserListPresenter {
     private LoadUsers loadUsersInteractor;
     private PersistUser persistUserInteractor;
     private DeleteUser deleteUserInteractor;
+    private FilterUsers filterUsers;
 
     public UserListPresenterImpl(LoadUsers loadUsers,
                                  PersistUser persistUser,
-                                 DeleteUser deleteUserInteractor) {
+                                 DeleteUser deleteUserInteractor,
+                                 FilterUsers filterUsers) {
         this.loadUsersInteractor = loadUsers;
         this.persistUserInteractor = persistUser;
         this.deleteUserInteractor = deleteUserInteractor;
+        this.filterUsers = filterUsers;
     }
 
     @Override
@@ -86,6 +90,18 @@ public class UserListPresenterImpl implements UserListPresenter {
         deleteUserInteractor.delete(user, new DeleteUser.Callback() {
             @Override
             public void onUserDeleted(User user) {
+                view.refresh();
+                progressView.dismissProgress();
+            }
+        });
+    }
+
+    @Override
+    public void filterUsers(String filter) {
+        progressView.showProgress();
+        filterUsers.filter(filter, new FilterUsers.Callback() {
+            @Override
+            public void onUsersFiltered(List<User> user) {
                 view.refresh();
                 progressView.dismissProgress();
             }

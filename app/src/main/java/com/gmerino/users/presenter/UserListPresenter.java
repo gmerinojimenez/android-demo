@@ -34,4 +34,6 @@ public interface UserListPresenter {
     void setStarred(User currentUser, boolean isChecked);
 
     void deleteUser(User currentUser);
+
+    void filterUsers(String filter);
 }

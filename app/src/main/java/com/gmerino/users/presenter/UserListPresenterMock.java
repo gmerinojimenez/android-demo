@@ -92,4 +92,9 @@ public class UserListPresenterMock implements UserListPresenter {
     public void deleteUser(User currentUser) {
 
     }
+
+    @Override
+    public void filterUsers(String filter) {
+
+    }
 }

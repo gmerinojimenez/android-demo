@@ -48,6 +48,7 @@ public class UserFilteredRepository implements UserRepository, FilterableReposit
         if(!initialized){
             users = lowerLevelRepository.getUsers();
             updateMap();
+            initialized = true;
         }
         return users;
     }
@@ -77,22 +78,24 @@ public class UserFilteredRepository implements UserRepository, FilterableReposit
 
     @Override
     public void applyFilter(String filter) {
+        initialized = false;
         getUsers();
         userMap.clear();
-        List<User> provisionalUsers =  new ArrayList<>(users);
+        List<User> provisionalUsers =  new ArrayList<>();
 
-        users.clear();
-        for(User user : provisionalUsers){
+        for(User user : users){
             if(passTheFilter(filter, user)){
-                users.add(user);
+                provisionalUsers.add(user);
                 userMap.put(user.getMd5(), user);
             }
         }
+
+        users = provisionalUsers;
 
         Collections.sort(users, comparator);
     }
 
     private boolean passTheFilter(String filter, User user){
-        return filter != null && !filter.isEmpty() && user.getName().toString().toLowerCase().contains(filter.toLowerCase());
+        return filter == null || filter.isEmpty() || (user.getName().toString().toLowerCase().contains(filter.toLowerCase()));
     }
 }

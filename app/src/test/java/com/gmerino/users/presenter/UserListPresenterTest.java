@@ -18,6 +18,7 @@ package com.gmerino.users.presenter;
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
 import com.gmerino.users.interactor.DeleteUser;
+import com.gmerino.users.interactor.FilterUsers;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.PersistUser;
 import com.gmerino.users.view.ProgressView;
@@ -57,6 +58,9 @@ public class UserListPresenterTest {
     @Mock
     DeleteUser deleteUserInteractor;
 
+    @Mock
+    FilterUsers filterUsers;
+
     LoadUsers loadUsersInteractor;
 
     List<User> expectedResponse;
@@ -71,7 +75,7 @@ public class UserListPresenterTest {
         setupExpectedResponse();
         loadUsersInteractor = new FakeLoadUsersInteractor();
         userListPresenter = new UserListPresenterImpl(loadUsersInteractor,
-                persistUserInteractor, deleteUserInteractor);
+                persistUserInteractor, deleteUserInteractor, filterUsers);
         userListPresenter.setProgressView(progressView);
         userListPresenter.setView(view);
     }

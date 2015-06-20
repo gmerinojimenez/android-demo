@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
@@ -89,6 +90,19 @@ public class UserListActivity extends BaseActivity
 
         listFragment.setCallback(this);
         listFragment.refresh();
+        // Get the SearchView and set the searchable configuration
+        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                presenter.filterUsers("");
+                searchView.onActionViewCollapsed();
+                return false;
+            }
+        });
 
         handleIntent(getIntent());
     }
@@ -105,11 +119,11 @@ public class UserListActivity extends BaseActivity
 
     private void handleIntent(Intent intent) {
 
-//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Log.d(TAG, "Searching " + query);
-//            UserHandler.getInstance().setFilter(query);
-//        }
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d(TAG, "Searching " + query);
+            presenter.filterUsers(query);
+        }
     }
 
     @Override
@@ -155,14 +169,6 @@ public class UserListActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
 
         return true;
     }

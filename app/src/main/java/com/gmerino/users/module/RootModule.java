@@ -12,6 +12,7 @@ import com.gmerino.data.repository.RestUserRepository;
 import com.gmerino.data.repository.UserRepository;
 import com.gmerino.users.App;
 import com.gmerino.users.core.MainThreadExecutorImpl;
+import com.gmerino.users.data.FilterableRepository;
 import com.gmerino.users.data.UserFilteredRepository;
 
 import javax.inject.Named;
@@ -72,6 +73,12 @@ public class RootModule {
         User.UserComparator comparator = new User.UserComparator();
         UserFilteredRepository filterableRepository = new UserFilteredRepository(userRepository, comparator);
         return filterableRepository;
+    }
+
+    @Provides
+    @Singleton
+    FilterableRepository provideFilterableRepository(UserRepository impl) {
+        return (FilterableRepository) impl;
     }
 
     @Provides

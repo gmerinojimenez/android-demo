@@ -5,15 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.domain.user.data.User;
 import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
+import com.gmerino.users.view.util.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView phone;
         ImageView picture;
         CheckBox starred;
-        Button delete;
+        ImageButton delete;
         StarredListener starredListener = new StarredListener();
         DeleteListener deleteListener = new DeleteListener();
     }
@@ -136,7 +137,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.phone = (TextView) convertView.findViewById(R.id.phone);
             holder.picture = (ImageView) convertView.findViewById(R.id.picture);
             holder.starred = (CheckBox) convertView.findViewById(R.id.starred);
-            holder.delete = (Button) convertView.findViewById(R.id.delete);
+            holder.delete = (ImageButton) convertView.findViewById(R.id.delete);
             holder.starred.setOnCheckedChangeListener(holder.starredListener);
             holder.delete.setOnClickListener(holder.deleteListener);
 
@@ -153,7 +154,8 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.email.setText(user.getEmail());
             holder.phone.setText(user.getPhone());
 
-            Picasso.with(activity).load(user.getPicture().getThumbnail()).into(holder.picture);
+            Picasso.with(activity).load(user.getPicture().getThumbnail())
+                    .transform(new CircleTransform()).into(holder.picture);
 
             holder.starredListener.setCurrentUser(null);
             holder.starred.setChecked(user.getStarred());

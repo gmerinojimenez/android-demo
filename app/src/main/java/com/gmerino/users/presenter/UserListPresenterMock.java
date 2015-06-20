@@ -87,4 +87,9 @@ public class UserListPresenterMock implements UserListPresenter {
     public void setStarred(User currentUser, boolean isChecked) {
         currentUser.setStarred(isChecked);
     }
+
+    @Override
+    public void deleteUser(User currentUser) {
+
+    }
 }

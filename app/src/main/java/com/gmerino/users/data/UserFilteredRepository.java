@@ -70,6 +70,12 @@ public class UserFilteredRepository implements UserRepository, FilterableReposit
     }
 
     @Override
+    public void delete(User user) {
+        users.remove(user);
+        userMap.remove(user);
+    }
+
+    @Override
     public void applyFilter(String filter) {
         getUsers();
         userMap.clear();

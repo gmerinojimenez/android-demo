@@ -71,4 +71,10 @@ public class CacheUserRepository implements UserRepository {
     public void persist(User user) {
         lowerLevelRepository.persist(user);
     }
+
+    @Override
+    public void delete(User user) {
+        userMap.remove(user.getMd5());
+        cachedUsers.remove(user);
+    }
 }

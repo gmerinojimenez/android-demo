@@ -64,28 +64,33 @@ public class UserAdapter extends ArrayAdapter<User> {
     }
 
     public void updateUsers(List<User> userList, Map<String, User> deleted) {
-//        this.users.clear();
-//        for (User user : userList) {
-//            if (!deleted.containsKey(user.getMd5()) &&
-//                    (!UserHandler.getInstance().shouldFilter() || user.getName().toString().toLowerCase().contains(UserHandler.getInstance().getFilter().toLowerCase()))) {
-//                this.users.add(user);
-//            }
-//        }
         this.users = userList;
-
     }
 
-    private class StarredListener implements CompoundButton.OnCheckedChangeListener {
-
-        private User currentUser;
+    static class UserListener {
+        User currentUser;
 
         public void setCurrentUser(User currentUser){
             this.currentUser = currentUser;
         }
+    }
+
+    private class StarredListener extends UserListener implements CompoundButton.OnCheckedChangeListener{
+
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if(currentUser != null){
                 presenter.setStarred(currentUser, isChecked);
+            }
+        }
+    }
+
+    private class DeleteListener extends UserListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if(currentUser != null){
+                presenter.deleteUser(currentUser);
             }
         }
     }
@@ -98,6 +103,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         CheckBox starred;
         Button delete;
         StarredListener starredListener = new StarredListener();
+        DeleteListener deleteListener = new DeleteListener();
     }
 
 
@@ -132,6 +138,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.starred = (CheckBox) convertView.findViewById(R.id.starred);
             holder.delete = (Button) convertView.findViewById(R.id.delete);
             holder.starred.setOnCheckedChangeListener(holder.starredListener);
+            holder.delete.setOnClickListener(holder.deleteListener);
 
             convertView.setTag(holder);
         } else {
@@ -152,41 +159,9 @@ public class UserAdapter extends ArrayAdapter<User> {
             holder.starred.setChecked(user.getStarred());
             holder.starredListener.setCurrentUser(user);
 
-//            //This should be on viewholder
-//            holder.starred.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    UserHandler.getInstance().addStarred(user, isChecked);
-//                }
-//            });
-
-//            //This should be on viewholder
-//            holder.delete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    UserHandler.getInstance().removeUser(user);
-//                }
-//            });
+            holder.deleteListener.setCurrentUser(user);
         }
 
         return convertView;
     }
-
-
-//    @Override
-//    public int getItemViewType(int position) {
-//        return 1;
-//    }
-//
-//    @Override
-//    public int getViewTypeCount() {
-//        return 1;
-//    }
-//
-//    @Override
-//    public boolean isEmpty() {
-//        return users.size() == 0;
-//    }
-
-
 }

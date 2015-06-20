@@ -29,4 +29,6 @@ public interface UserRepository {
     User getUser(final String userId);
 
     void persist(User user);
+
+    void delete(User user);
 }

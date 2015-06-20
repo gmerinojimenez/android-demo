@@ -17,6 +17,7 @@ package com.gmerino.users.presenter;
 
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
+import com.gmerino.users.interactor.DeleteUser;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.PersistUser;
 import com.gmerino.users.view.ProgressView;
@@ -53,7 +54,11 @@ public class UserListPresenterTest {
     @Mock
     PersistUser persistUserInteractor;
 
+    @Mock
+    DeleteUser deleteUserInteractor;
+
     LoadUsers loadUsersInteractor;
+
     List<User> expectedResponse;
 
 
@@ -65,7 +70,8 @@ public class UserListPresenterTest {
         MockitoAnnotations.initMocks(this);
         setupExpectedResponse();
         loadUsersInteractor = new FakeLoadUsersInteractor();
-        userListPresenter = new UserListPresenterImpl(loadUsersInteractor, persistUserInteractor);
+        userListPresenter = new UserListPresenterImpl(loadUsersInteractor,
+                persistUserInteractor, deleteUserInteractor);
         userListPresenter.setProgressView(progressView);
         userListPresenter.setView(view);
     }
@@ -79,9 +85,16 @@ public class UserListPresenterTest {
 
     @Test
     public void testStarredUser() {
-        userListPresenter.setStarred(mock(User.class),ANY_BOOLEAN);
+        userListPresenter.setStarred(mock(User.class), ANY_BOOLEAN);
 
         verify(persistUserInteractor).persist(isA(User.class), isA(PersistUser.Callback.class));
+    }
+
+    @Test
+    public void testDeletedExistingUser() {
+        userListPresenter.deleteUser(isA(User.class));
+
+        verify(deleteUserInteractor).delete(isA(User.class), isA(DeleteUser.Callback.class));
     }
 
     private void setupExpectedResponse() {

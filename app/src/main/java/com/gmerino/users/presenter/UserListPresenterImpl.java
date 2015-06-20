@@ -1,6 +1,7 @@
 package com.gmerino.users.presenter;
 
 import com.domain.user.data.User;
+import com.gmerino.users.interactor.DeleteUser;
 import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.PersistUser;
 import com.gmerino.users.view.ProgressView;
@@ -32,11 +33,14 @@ public class UserListPresenterImpl implements UserListPresenter {
 
     private LoadUsers loadUsersInteractor;
     private PersistUser persistUserInteractor;
+    private DeleteUser deleteUserInteractor;
 
     public UserListPresenterImpl(LoadUsers loadUsers,
-                                 PersistUser persistUser) {
+                                 PersistUser persistUser,
+                                 DeleteUser deleteUserInteractor) {
         this.loadUsersInteractor = loadUsers;
         this.persistUserInteractor = persistUser;
+        this.deleteUserInteractor = deleteUserInteractor;
     }
 
     @Override
@@ -62,10 +66,10 @@ public class UserListPresenterImpl implements UserListPresenter {
     }
 
     @Override
-    public void setStarred(User currentUser, boolean starred) {
+    public void setStarred(User user, boolean starred) {
         progressView.showProgress();
-        currentUser.setStarred(starred);
-        persistUserInteractor.persist(currentUser, new PersistUser.Callback() {
+        user.setStarred(starred);
+        persistUserInteractor.persist(user, new PersistUser.Callback() {
                     @Override
                     public void onUserPersisted(User user) {
                         //Nothing to do now
@@ -74,5 +78,17 @@ public class UserListPresenterImpl implements UserListPresenter {
                 }
 
         );
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        progressView.showProgress();
+        deleteUserInteractor.delete(user, new DeleteUser.Callback() {
+            @Override
+            public void onUserDeleted(User user) {
+                view.refresh();
+                progressView.dismissProgress();
+            }
+        });
     }
 }

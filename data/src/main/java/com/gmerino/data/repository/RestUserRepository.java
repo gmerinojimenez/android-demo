@@ -69,6 +69,11 @@ public class RestUserRepository implements UserRepository {
         //Nothing to do
     }
 
+    @Override
+    public void delete(User user) {
+        //Nothing to do
+    }
+
     private User getFakeUser() {
         User user = new User();
         Name name = new Name();

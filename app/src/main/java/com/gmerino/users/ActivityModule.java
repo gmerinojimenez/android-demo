@@ -2,6 +2,8 @@ package com.gmerino.users;
 
 import android.content.Context;
 
+import com.gmerino.users.interactor.DeleteUser;
+import com.gmerino.users.interactor.DeleteUserImpl;
 import com.gmerino.users.interactor.LoadUser;
 import com.gmerino.users.interactor.LoadUserImpl;
 import com.gmerino.users.interactor.LoadUsers;
@@ -58,8 +60,10 @@ public class ActivityModule {
     }
 
     @Provides
-    UserListPresenter provideUserListPresenter(LoadUsers loadUsers, PersistUser persistUser) {
-        UserListPresenter presenter = new UserListPresenterImpl(loadUsers, persistUser);
+    UserListPresenter provideUserListPresenter(LoadUsers loadUsers,
+                                               PersistUser persistUser,
+                                               DeleteUser deleteUser) {
+        UserListPresenter presenter = new UserListPresenterImpl(loadUsers, persistUser, deleteUser);
         return presenter;
     }
 
@@ -82,6 +86,11 @@ public class ActivityModule {
 
     @Provides
     PersistUser providePersistUser(PersistUserImpl impl) {
+        return impl;
+    }
+
+    @Provides
+    DeleteUser provideDeleteUser(DeleteUserImpl impl) {
         return impl;
     }
 }

@@ -199,6 +199,7 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
         this.callback = callback;
     }
 
+    @Override
     public void refresh(){
         presenter.loadUsers();
     }

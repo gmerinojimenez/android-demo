@@ -32,4 +32,6 @@ public interface UserListPresenter {
     void loadUsers();
 
     void setStarred(User currentUser, boolean isChecked);
+
+    void deleteUser(User currentUser);
 }

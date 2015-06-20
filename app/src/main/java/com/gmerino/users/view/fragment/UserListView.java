@@ -25,4 +25,6 @@ import java.util.List;
 public interface UserListView {
 
     void onUsersLoaded(List<User> users);
+
+    void refresh();
 }

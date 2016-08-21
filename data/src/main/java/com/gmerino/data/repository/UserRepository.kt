@@ -1,8 +1,6 @@
-package com.gmerino.data.repository;
+package com.gmerino.data.repository
 
-import com.domain.user.data.User;
-
-import java.util.List;
+import com.domain.user.data.User
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -22,13 +20,13 @@ import java.util.List;
 /**
  * Created by Guille on 31/05/2015.
  */
-public interface UserRepository {
+interface UserRepository {
 
-    List<User> getUsers();
+    fun getUsers(): List<User>
 
-    User getUser(final String userId);
+    fun getUser(userId: String): User
 
-    void persist(User user);
+    fun persist(user: User)
 
-    void delete(User user);
+    fun delete(user: User)
 }

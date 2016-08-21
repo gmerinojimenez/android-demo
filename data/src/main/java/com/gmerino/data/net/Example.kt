@@ -1,10 +1,7 @@
+package com.gmerino.data.net
 
-package com.gmerino.data.net;
-
-import com.google.gson.annotations.Expose;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.annotations.Expose
+import java.util.*
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -21,32 +18,24 @@ import java.util.List;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Example {
-
-    @Expose
-    private List<Results> results = new ArrayList<Results>();
+class Example {
 
     /**
-     * 
+
      * @return
-     *     The results
+     * *     The results
      */
-    public List<Results> getResults() {
-        return results;
-    }
-
     /**
-     * 
-     * @param results
-     *     The results
-     */
-    public void setResults(List<Results> results) {
-        this.results = results;
-    }
 
-    public Example withResults(List<Results> results) {
-        this.results = results;
-        return this;
+     * @param results
+     * *     The results
+     */
+    @Expose
+    var results: List<Results> = ArrayList()
+
+    fun withResults(results: List<Results>): Example {
+        this.results = results
+        return this
     }
 
 }

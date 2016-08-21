@@ -16,24 +16,21 @@ package com.gmerino.users.interactor;
  */
 
 
-import com.domain.user.data.Name;
-import com.domain.user.data.User;
-import com.gmerino.data.repository.UserRepository;
-import com.gmerino.users.FakeExecutor;
-import com.gmerino.users.FakeMainThreadExecutor;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+import com.domain.user.data.Name;
+import com.domain.user.data.User;
+import com.gmerino.data.repository.UserRepository;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -76,13 +73,13 @@ public class LoadUsersTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        loadUser = new LoadUsersImpl(new FakeExecutor(),
-                userRepository, new FakeMainThreadExecutor());
-
-        setupExpectedResponse();
-
-        when(userRepository.getUsers()).thenReturn(expectedResponse);
-        when(user.getMd5()).thenReturn(ANY_USER_ID);
+//        loadUser = new LoadUsersImpl(new FakeExecutor(),
+//                userRepository, new FakeMainThreadExecutor());
+//
+//        setupExpectedResponse();
+//
+//        when(userRepository.getUsers()).thenReturn(expectedResponse);
+//        when(user.getId()).thenReturn(ANY_USER_ID);
     }
 
 

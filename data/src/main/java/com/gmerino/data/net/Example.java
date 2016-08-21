@@ -24,14 +24,14 @@ import java.util.List;
 public class Example {
 
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private List<Results> results = new ArrayList<Results>();
 
     /**
      * 
      * @return
      *     The results
      */
-    public List<Result> getResults() {
+    public List<Results> getResults() {
         return results;
     }
 
@@ -40,11 +40,11 @@ public class Example {
      * @param results
      *     The results
      */
-    public void setResults(List<Result> results) {
+    public void setResults(List<Results> results) {
         this.results = results;
     }
 
-    public Example withResults(List<Result> results) {
+    public Example withResults(List<Results> results) {
         this.results = results;
         return this;
     }

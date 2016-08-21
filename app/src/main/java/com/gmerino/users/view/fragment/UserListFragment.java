@@ -1,5 +1,8 @@
 package com.gmerino.users.view.fragment;
 
+import java.util.List;
+import javax.inject.Inject;
+
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -13,10 +16,6 @@ import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
 import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.adapter.UserAdapter;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -144,7 +143,7 @@ public class UserListFragment extends ListFragment implements UserListView, Prog
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        callback.onItemSelected(((User) listView.getAdapter().getItem(position)).getMd5());
+        callback.onItemSelected(((User) listView.getAdapter().getItem(position)).getId().getValue());
     }
 
     @Override

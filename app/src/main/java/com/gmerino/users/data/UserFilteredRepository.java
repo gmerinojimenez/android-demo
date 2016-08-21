@@ -15,14 +15,14 @@ package com.gmerino.users.data;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.domain.user.data.User;
-import com.gmerino.data.repository.UserRepository;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.domain.user.data.User;
+import com.gmerino.data.repository.UserRepository;
 
 /**
  * Created by Guille on 11/06/2015.
@@ -56,7 +56,7 @@ public class UserFilteredRepository implements UserRepository, FilterableReposit
     private void updateMap() {
         userMap.clear();
         for(User user : users){
-            userMap.put(user.getMd5(), user);
+            userMap.put(user.getId().getValue(), user);
         }
     }
 
@@ -86,7 +86,7 @@ public class UserFilteredRepository implements UserRepository, FilterableReposit
         for(User user : users){
             if(passTheFilter(filter, user)){
                 provisionalUsers.add(user);
-                userMap.put(user.getMd5(), user);
+                userMap.put(user.getId().getValue(), user);
             }
         }
 

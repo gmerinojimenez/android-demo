@@ -1,16 +1,15 @@
 package com.gmerino.data.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.util.Log;
 
 import com.domain.user.data.Location;
 import com.domain.user.data.Name;
-import com.domain.user.data.User;
 import com.gmerino.data.net.RandomUserRestAPI;
-import com.gmerino.data.net.Result;
-import com.gmerino.data.net.UserResponse;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.domain.user.data.User;
+import com.gmerino.data.net.Results;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -46,10 +45,10 @@ public class RestUserRepository implements UserRepository {
         List<User> userList = new ArrayList<>();
         try {
 
-            UserResponse response = randomUserRestAPI.getList(USERS_PER_REQUEST);
+            Results response = randomUserRestAPI.getList(USERS_PER_REQUEST);
 
-            for (Result result : response.getResults()) {
-                User user = result.getUser();
+            for (User user : response.getUsers()) {
+//                User user = result.getUser();
                 userList.add(user);
             }
         } catch (Exception e) {

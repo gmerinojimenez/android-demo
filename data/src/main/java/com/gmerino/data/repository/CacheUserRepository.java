@@ -1,11 +1,11 @@
 package com.gmerino.data.repository;
 
-import com.domain.user.data.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.domain.user.data.User;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ public class CacheUserRepository implements UserRepository {
     private void updateMap() {
         userMap.clear();
         for(User user : cachedUsers){
-            userMap.put(user.getMd5(), user);
+            userMap.put(user.getId().getValue(), user);
         }
     }
 
@@ -74,7 +74,7 @@ public class CacheUserRepository implements UserRepository {
 
     @Override
     public void delete(User user) {
-        userMap.remove(user.getMd5());
+        userMap.remove(user.getId().getValue());
         cachedUsers.remove(user);
     }
 }

@@ -23,14 +23,14 @@ import java.util.List;
  */
 public class UserResponse {
 
-    private List<Result> results = new ArrayList<>();
+    private List<Results> results = new ArrayList<>();
 
 
-    public List<Result> getResults() {
+    public List<Results> getResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<Results> results) {
         this.results = results;
     }
 }

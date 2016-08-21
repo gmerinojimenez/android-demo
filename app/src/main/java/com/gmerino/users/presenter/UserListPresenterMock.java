@@ -1,12 +1,12 @@
 package com.gmerino.users.presenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
 import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -85,7 +85,7 @@ public class UserListPresenterMock implements UserListPresenter {
 
     @Override
     public void setStarred(User currentUser, boolean isChecked) {
-        currentUser.setStarred(isChecked);
+//        currentUser.setStarred(isChecked);
     }
 
     @Override

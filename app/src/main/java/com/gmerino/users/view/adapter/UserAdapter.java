@@ -1,5 +1,10 @@
 package com.gmerino.users.view.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.inject.Inject;
+
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +21,6 @@ import com.gmerino.users.R;
 import com.gmerino.users.presenter.UserListPresenter;
 import com.gmerino.users.view.util.CircleTransform;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -158,7 +157,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                     .transform(new CircleTransform()).into(holder.picture);
 
             holder.starredListener.setCurrentUser(null);
-            holder.starred.setChecked(user.getStarred());
+            holder.starred.setChecked(false/*user.getStarred()*/);
             holder.starredListener.setCurrentUser(user);
 
             holder.deleteListener.setCurrentUser(user);

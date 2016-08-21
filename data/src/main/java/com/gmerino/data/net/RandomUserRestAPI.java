@@ -21,9 +21,9 @@ import retrofit.http.Query;
 
 public interface RandomUserRestAPI {
 
-    String SERVER_URL = "http://api.randomuser.me/";
+    String SERVER_URL = "https://randomuser.me/api/";
 
     @GET("/")
-    UserResponse getList(@Query("results") Integer results);
+    Results getList(@Query("results") Integer results);
 }
 

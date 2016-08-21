@@ -2,32 +2,22 @@
 package com.domain.user.data;
 
 import com.google.gson.annotations.Expose;
-
-/*
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+import com.google.gson.annotations.SerializedName;
 
 public class Location {
 
+    @SerializedName("street")
     @Expose
     private String street;
+    @SerializedName("city")
     @Expose
     private String city;
+    @SerializedName("state")
     @Expose
     private String state;
+    @SerializedName("postcode")
     @Expose
-    private String zip;
+    private Integer postcode;
 
     /**
      * 
@@ -45,11 +35,6 @@ public class Location {
      */
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    public Location withStreet(String street) {
-        this.street = street;
-        return this;
     }
 
     /**
@@ -70,11 +55,6 @@ public class Location {
         this.city = city;
     }
 
-    public Location withCity(String city) {
-        this.city = city;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -93,45 +73,22 @@ public class Location {
         this.state = state;
     }
 
-    public Location withState(String state) {
-        this.state = state;
-        return this;
-    }
-
     /**
      * 
      * @return
-     *     The zip
+     *     The postcode
      */
-    public String getZip() {
-        return zip;
+    public Integer getPostcode() {
+        return postcode;
     }
 
     /**
      * 
-     * @param zip
-     *     The zip
+     * @param postcode
+     *     The postcode
      */
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setPostcode(Integer postcode) {
+        this.postcode = postcode;
     }
 
-    public Location withZip(String zip) {
-        this.zip = zip;
-        return this;
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(street);
-        builder.append(", ");
-        builder.append(city);
-        builder.append(", ");
-        builder.append(state);
-        builder.append(", ");
-        builder.append(zip);
-        return builder.toString();
-    }
 }

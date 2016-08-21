@@ -1,5 +1,7 @@
 package com.gmerino.users.presenter;
 
+import java.util.List;
+
 import com.domain.user.data.User;
 import com.gmerino.users.interactor.DeleteUser;
 import com.gmerino.users.interactor.FilterUsers;
@@ -7,8 +9,6 @@ import com.gmerino.users.interactor.LoadUsers;
 import com.gmerino.users.interactor.PersistUser;
 import com.gmerino.users.view.ProgressView;
 import com.gmerino.users.view.fragment.UserListView;
-
-import java.util.List;
 
 
 /*
@@ -72,7 +72,7 @@ public class UserListPresenterImpl implements UserListPresenter {
     @Override
     public void setStarred(User user, boolean starred) {
         progressView.showProgress();
-        user.setStarred(starred);
+//        user.setStarred(starred);
         persistUserInteractor.persist(user, new PersistUser.Callback() {
                     @Override
                     public void onUserPersisted(User user) {

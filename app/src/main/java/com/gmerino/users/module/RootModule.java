@@ -1,5 +1,13 @@
 package com.gmerino.users.module;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+import retrofit.RestAdapter;
+import retrofit.RestAdapter.Log;
+import retrofit.RestAdapter.LogLevel;
 import android.content.Context;
 
 import com.domain.user.data.User;
@@ -14,13 +22,6 @@ import com.gmerino.users.App;
 import com.gmerino.users.core.MainThreadExecutorImpl;
 import com.gmerino.users.data.FilterableRepository;
 import com.gmerino.users.data.UserFilteredRepository;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
-import retrofit.RestAdapter;
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -66,6 +67,13 @@ public class RootModule {
     UserRepository provideUserRepository() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(RandomUserRestAPI.SERVER_URL)
+                .setLog(new Log() {
+                    @Override
+                    public void log(final String message) {
+                        android.util.Log.d("Rest", message);
+                    }
+                })
+                .setLogLevel(LogLevel.FULL)
                 .build();
         RandomUserRestAPI service = restAdapter.create(RandomUserRestAPI.class);
         RestUserRepository rest = new RestUserRepository(service);

@@ -18,7 +18,7 @@ package com.gmerino.data.repository;
 import com.domain.user.data.Name;
 import com.domain.user.data.User;
 import com.gmerino.data.net.RandomUserRestAPI;
-import com.gmerino.data.net.Result;
+import com.gmerino.data.net.Results;
 import com.gmerino.data.net.UserResponse;
 
 import org.junit.Before;
@@ -76,7 +76,7 @@ public class RestUserRepositoryTest {
     private void setupGoodResponse() {
         goodResponse = new UserResponse();
 
-        List<Result> list = new ArrayList<>(ANY_LIMIT);
+        List<Results> list = new ArrayList<>(ANY_LIMIT);
         for(int i = 0; i < ANY_LIMIT; i++){
             Name name = new Name();
             name.setFirst(ANY_FIRST_NAME);
@@ -86,7 +86,7 @@ public class RestUserRepositoryTest {
             User user = new User();
             user.setName(name);
 
-            Result result = new Result();
+            Results result = new Results();
             result.setUser(user);
             list.add(result);
         }

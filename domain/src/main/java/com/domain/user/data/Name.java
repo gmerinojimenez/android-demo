@@ -1,29 +1,18 @@
 
 package com.domain.user.data;
 
-import com.google.gson.annotations.Expose;import java.lang.Override;import java.lang.String;import java.lang.StringBuilder;
-
-/*
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Name {
 
+    @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("first")
     @Expose
     private String first;
+    @SerializedName("last")
     @Expose
     private String last;
 
@@ -45,11 +34,6 @@ public class Name {
         this.title = title;
     }
 
-    public Name withTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -68,11 +52,6 @@ public class Name {
         this.first = first;
     }
 
-    public Name withFirst(String first) {
-        this.first = first;
-        return this;
-    }
-
     /**
      * 
      * @return
@@ -89,21 +68,6 @@ public class Name {
      */
     public void setLast(String last) {
         this.last = last;
-    }
-
-    public Name withLast(String last) {
-        this.last = last;
-        return this;
-    }
-
-    @Override
-    public String toString(){
-        StringBuilder builder = new StringBuilder(this.title);
-        builder.append(" ");
-        builder.append(first);
-        builder.append(" ");
-        builder.append(last);
-        return builder.toString();
     }
 
 }

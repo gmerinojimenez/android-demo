@@ -17,7 +17,7 @@ public class Location {
     private String state;
     @SerializedName("postcode")
     @Expose
-    private Integer postcode;
+    private String postcode;
 
     /**
      * 
@@ -78,7 +78,7 @@ public class Location {
      * @return
      *     The postcode
      */
-    public Integer getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
@@ -87,7 +87,7 @@ public class Location {
      * @param postcode
      *     The postcode
      */
-    public void setPostcode(Integer postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
 

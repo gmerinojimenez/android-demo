@@ -1,4 +1,4 @@
-package com.gmerino.users.core;
+package com.gmerino.users.interactor
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,16 @@ package com.gmerino.users.core;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.gmerino.commons.MainThreadExecutor;
-
-import javax.inject.Inject;
+import com.domain.user.data.User
 
 /**
- * Created by Guille on 20/06/2015.
+ * Created by Guille on 31/05/2015.
  */
-public class MainThreadExecutorImpl implements MainThreadExecutor {
+interface LoadUsers {
 
-    private final retrofit.android.MainThreadExecutor retrofitMainThreadExecutor;
-
-    @Inject
-    public MainThreadExecutorImpl(retrofit.android.MainThreadExecutor retrofitMainThreadExecutor) {
-        this.retrofitMainThreadExecutor = retrofitMainThreadExecutor;
+    interface Callback {
+        fun onUsersLoaded(users: List<User>)
     }
 
-    @Override
-    public void execute(Runnable runnable) {
-        retrofitMainThreadExecutor.execute(runnable);
-    }
-
+    fun execute(callback: Callback)
 }

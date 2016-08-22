@@ -1,9 +1,4 @@
-package com.gmerino.users.presenter;
-
-import com.domain.user.data.User;
-import com.gmerino.users.view.ProgressView;
-import com.gmerino.users.view.fragment.UserListView;
-
+package com.gmerino.users.interactor
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -20,20 +15,18 @@ import com.gmerino.users.view.fragment.UserListView;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import com.domain.user.data.User
+
 /**
- * Created by Guille on 30/05/2015.
+ * Created by Guille on 04/06/2015.
  */
-public interface UserListPresenter {
+interface LoadUser {
 
-    void setView(UserListView view);
+    interface Callback {
+        fun onUserLoaded(user: User)
+    }
 
-    void setProgressView(ProgressView progressView);
+    fun execute(callback: Callback)
 
-    void loadUsers();
-
-    void setStarred(User currentUser, boolean isChecked);
-
-    void deleteUser(User currentUser);
-
-    void filterUsers(String filter);
+    fun setUserId(userId: String)
 }

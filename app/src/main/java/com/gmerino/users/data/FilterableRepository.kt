@@ -1,4 +1,4 @@
-package com.gmerino.users.interactor;
+package com.gmerino.users.data
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -15,18 +15,10 @@ package com.gmerino.users.interactor;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.domain.user.data.User;
-
-import java.util.List;
-
 /**
- * Created by Guille on 31/05/2015.
+ * Created by Guille on 11/06/2015.
  */
-public interface LoadUsers {
+interface FilterableRepository {
 
-    interface Callback {
-        void onUsersLoaded(List<User> users);
-    }
-
-    void execute(Callback callback);
+    fun applyFilter(string: String)
 }

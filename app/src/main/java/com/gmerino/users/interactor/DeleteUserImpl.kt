@@ -1,4 +1,4 @@
-package com.gmerino.users.interactor;
+package com.gmerino.users.interactor
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,14 @@ package com.gmerino.users.interactor;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.domain.user.data.User;
+import com.domain.user.data.User
+import com.gmerino.commons.Executor
+import com.gmerino.commons.Interactor
+import com.gmerino.commons.MainThreadExecutor
+import com.gmerino.data.repository.UserRepository
+
+import javax.inject.Inject
+
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -35,11 +42,26 @@ import com.domain.user.data.User;
 /**
  * Created by Guille on 10/06/2015.
  */
-public interface DeleteUser {
+class DeleteUserImpl
+@Inject
+constructor(private val executor: Executor,
+            private val userRepository: UserRepository, private val mainThreadExecutor: MainThreadExecutor) : DeleteUser, Interactor {
+    private var callback: DeleteUser.Callback? = null
 
-    interface Callback {
-        void onUserDeleted(User user);
+    private var user: User? = null
+
+    override fun run() {
+        userRepository.delete(user!!)
+        mainThreadExecutor.execute { callback!!.onUserDeleted(user!!) }
     }
 
-    void delete(User user, Callback callback);
+    override fun onFailure(t: Throwable) {
+
+    }
+
+    override fun delete(user: User, callback: DeleteUser.Callback) {
+        this.callback = callback
+        this.user = user
+        executor.execute(this)
+    }
 }

@@ -1,4 +1,4 @@
-package com.gmerino.users.interactor;
+package com.gmerino.users.interactor
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@ package com.gmerino.users.interactor;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.gmerino.commons.Executor;
-import com.gmerino.commons.Interactor;
-import com.gmerino.commons.MainThreadExecutor;
-import com.gmerino.data.repository.UserRepository;
-import com.gmerino.users.data.FilterableRepository;
+import com.gmerino.commons.Executor
+import com.gmerino.commons.Interactor
+import com.gmerino.commons.MainThreadExecutor
+import com.gmerino.data.repository.UserRepository
+import com.gmerino.users.data.FilterableRepository
 
-import javax.inject.Inject;
+import javax.inject.Inject
 
 
 /*
@@ -57,48 +57,29 @@ import javax.inject.Inject;
 /**
  * Created by Guille on 10/06/2015.
  */
-public class FilterUsersImpl implements FilterUsers, Interactor {
+class FilterUsersImpl
+@Inject
+constructor(private val executor: Executor,
+            private val userRepository: UserRepository,
+            private val filterableRepository: FilterableRepository,
+            private val mainThreadExecutor: MainThreadExecutor) : FilterUsers, Interactor {
+    private var callback: FilterUsers.Callback? = null
 
-    private final Executor executor;
-    private final MainThreadExecutor mainThreadExecutor;
-    private final FilterableRepository filterableRepository;
-    private final UserRepository userRepository;
-    private Callback callback;
+    private var filter: String? = null
 
-    private String filter;
-
-    @Inject
-    public FilterUsersImpl(Executor executor,
-                           UserRepository userRepository,
-                           FilterableRepository filterableRepository,
-                           MainThreadExecutor mainThreadExecutor) {
-        this.executor = executor;
-        this.mainThreadExecutor = mainThreadExecutor;
-        this.filterableRepository = filterableRepository;
-        this.userRepository = userRepository;
+    override fun run() {
+        filterableRepository.applyFilter(filter!!)
+        mainThreadExecutor.execute { callback!!.onUsersFiltered(userRepository.getUsers()) }
     }
 
-    @Override
-    public void run() {
-        filterableRepository.applyFilter(filter);
-        mainThreadExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                callback.onUsersFiltered(userRepository.getUsers());
-            }
-        });
-    }
-
-    @Override
-    public void onFailure(Throwable t) {
+    override fun onFailure(t: Throwable) {
 
     }
 
-    @Override
-    public void filter(String filter, Callback callback) {
-        this.callback = callback;
-        this.filter = filter;
-        executor.execute(this);
+    override fun filter(filter: String, callback: FilterUsers.Callback) {
+        this.callback = callback
+        this.filter = filter
+        executor.execute(this)
 
     }
 }

@@ -1,7 +1,4 @@
-package com.gmerino.users.presenter;
-
-import com.gmerino.users.view.ProgressView;
-import com.gmerino.users.view.fragment.UserDetailView;
+package com.gmerino.users.interactor
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -18,11 +15,16 @@ import com.gmerino.users.view.fragment.UserDetailView;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public interface UserDetailPresenter {
+import com.domain.user.data.User
 
-    void loadUser(String id);
+/**
+ * Created by Guille on 10/06/2015.
+ */
+interface PersistUser {
 
-    void setView(UserDetailView view);
+    interface Callback {
+        fun onUserPersisted(user: User)
+    }
 
-    void setProgressView(ProgressView view);
+    fun persist(user: User, callback: Callback)
 }

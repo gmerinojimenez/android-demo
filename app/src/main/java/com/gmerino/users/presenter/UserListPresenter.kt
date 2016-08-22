@@ -1,4 +1,9 @@
-package com.gmerino.users.data;
+package com.gmerino.users.presenter
+
+import com.domain.user.data.User
+import com.gmerino.users.view.ProgressView
+import com.gmerino.users.view.fragment.UserListView
+
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -16,9 +21,19 @@ package com.gmerino.users.data;
  */
 
 /**
- * Created by Guille on 11/06/2015.
+ * Created by Guille on 30/05/2015.
  */
-public interface FilterableRepository {
+interface UserListPresenter {
 
-    void applyFilter(String string);
+    fun setView(view: UserListView)
+
+    fun setProgressView(progressView: ProgressView)
+
+    fun loadUsers()
+
+    fun setStarred(currentUser: User, isChecked: Boolean)
+
+    fun deleteUser(currentUser: User)
+
+    fun filterUsers(filter: String)
 }

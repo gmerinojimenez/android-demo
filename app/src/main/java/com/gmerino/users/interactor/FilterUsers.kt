@@ -1,4 +1,4 @@
-package com.gmerino.users.interactor;
+package com.gmerino.users.interactor
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -15,9 +15,7 @@ package com.gmerino.users.interactor;
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.domain.user.data.User;
-
-import java.util.List;
+import com.domain.user.data.User
 
 /*
  *     This program is free software: you can redistribute it and/or modify
@@ -52,11 +50,11 @@ import java.util.List;
 /**
  * Created by Guille on 10/06/2015.
  */
-public interface FilterUsers {
+interface FilterUsers {
 
     interface Callback {
-        void onUsersFiltered(List<User> user);
+        fun onUsersFiltered(user: List<User>)
     }
 
-    void filter(String filter, Callback callback);
+    fun filter(filter: String, callback: Callback)
 }
